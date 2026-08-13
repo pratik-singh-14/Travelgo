@@ -1,0 +1,2265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TravelGo | Train Booking</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f4f7fb;
+    color:#111827;
+}
+
+a{
+    text-decoration:none;
+}
+
+button,
+input,
+select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* ================= NAVBAR ================= */
+
+header{
+    height:70px;
+    padding:0 6%;
+
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    color:#2563eb;
+    font-size:22px;
+    font-weight:800;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:12px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #06b6d4
+    );
+
+    color:white;
+}
+
+nav{
+    display:flex;
+    gap:25px;
+}
+
+nav a{
+    color:#4b5563;
+    font-size:13px;
+    font-weight:700;
+}
+
+nav a:hover,
+nav a.active{
+    color:#2563eb;
+}
+
+.home-btn{
+    padding:9px 15px;
+
+    border-radius:9px;
+
+    background:#2563eb;
+    color:white;
+
+    font-size:11px;
+    font-weight:700;
+}
+
+/* ================= MAIN ================= */
+
+.page{
+    max-width:1250px;
+    margin:auto;
+    padding:50px 6%;
+}
+
+.back{
+    display:inline-block;
+    margin-bottom:20px;
+
+    color:#2563eb;
+    font-size:11px;
+    font-weight:700;
+}
+
+.page-top span{
+    color:#2563eb;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.page-top h1{
+    margin-top:8px;
+    font-size:38px;
+}
+
+.page-top p{
+    margin-top:8px;
+
+    color:#6b7280;
+    font-size:12px;
+}
+
+/* ================= SEARCH ================= */
+
+.search-panel{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr 1fr auto;
+
+    gap:10px;
+
+    padding:18px;
+    margin:25px 0 30px;
+
+    background:white;
+
+    border:1px solid #e5e7eb;
+    border-radius:18px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.06);
+}
+
+.field{
+    padding:11px;
+
+    border:1px solid #e5e7eb;
+    border-radius:9px;
+}
+
+.field label{
+    display:block;
+
+    margin-bottom:6px;
+
+    color:#6b7280;
+    font-size:8px;
+    font-weight:800;
+}
+
+.field input,
+.field select{
+    width:100%;
+
+    border:0;
+    outline:0;
+
+    background:transparent;
+
+    font-size:11px;
+}
+
+.search-btn{
+    padding:0 22px;
+
+    border:0;
+    border-radius:9px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #06b6d4
+    );
+
+    color:white;
+
+    font-size:11px;
+    font-weight:800;
+}
+
+/* ================= CONTENT ================= */
+
+.content{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:20px;
+}
+
+/* ================= FILTER ================= */
+
+.filters{
+    height:fit-content;
+
+    padding:20px;
+
+    background:white;
+
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+}
+
+.filters h2{
+    margin-bottom:20px;
+    font-size:16px;
+}
+
+.filter-group{
+    padding-bottom:18px;
+    margin-bottom:18px;
+
+    border-bottom:1px solid #e5e7eb;
+}
+
+.filter-group:last-child{
+    border-bottom:0;
+}
+
+.filter-group h3{
+    margin-bottom:10px;
+    font-size:11px;
+}
+
+.filter-option{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    margin:10px 0;
+
+    color:#6b7280;
+    font-size:10px;
+}
+
+/* ================= RESULTS ================= */
+
+.results-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:15px;
+}
+
+.results-header h2{
+    font-size:18px;
+}
+
+.sort{
+    padding:9px;
+
+    border:1px solid #e5e7eb;
+    border-radius:8px;
+
+    background:white;
+
+    font-size:10px;
+}
+
+/* ================= TRAIN CARD ================= */
+
+.train-card{
+    display:grid;
+
+    grid-template-columns:1.2fr 1fr 150px;
+
+    gap:20px;
+
+    padding:18px;
+    margin-bottom:15px;
+
+    background:white;
+
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+
+    transition:.25s;
+}
+
+.train-card:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.08);
+}
+
+.train-name{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    margin-bottom:8px;
+
+    font-size:17px;
+    font-weight:800;
+}
+
+.train-icon{
+    width:40px;
+    height:40px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:10px;
+
+    background:#eff6ff;
+
+    font-size:21px;
+}
+
+.train-number{
+    color:#6b7280;
+    font-size:9px;
+}
+
+.route{
+    display:flex;
+    align-items:center;
+    gap:15px;
+
+    margin-top:15px;
+}
+
+.station strong{
+    display:block;
+    font-size:18px;
+}
+
+.station span{
+    color:#6b7280;
+    font-size:9px;
+}
+
+.line{
+    width:70px;
+    height:2px;
+
+    background:#dbeafe;
+
+    position:relative;
+}
+
+.line::after{
+    content:"";
+
+    position:absolute;
+
+    right:0;
+    top:-4px;
+
+    width:10px;
+    height:10px;
+
+    border-radius:50%;
+
+    background:#2563eb;
+}
+
+.duration{
+    color:#6b7280;
+    font-size:9px;
+}
+
+/* ================= CLASSES ================= */
+
+.classes{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+
+    margin-top:15px;
+}
+
+.class-tag{
+    padding:6px 9px;
+
+    border-radius:6px;
+
+    background:#f1f5f9;
+
+    color:#475569;
+
+    font-size:8px;
+}
+
+/* ================= PRICE ================= */
+
+.price-box{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-end;
+}
+
+.price-box small{
+    color:#6b7280;
+    font-size:8px;
+}
+
+.price-box strong{
+    margin:5px 0;
+    font-size:20px;
+}
+
+.price-box span{
+    color:#6b7280;
+    font-size:8px;
+}
+
+.book-btn{
+    margin-top:12px;
+
+    padding:10px 18px;
+
+    border:0;
+    border-radius:8px;
+
+    background:#2563eb;
+    color:white;
+
+    font-size:9px;
+    font-weight:800;
+}
+
+.book-btn:hover{
+    background:#1d4ed8;
+}
+
+/* ================= MODAL ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.65);
+
+    backdrop-filter:blur(5px);
+
+    z-index:5000;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(500px,100%);
+    max-height:90vh;
+
+    overflow-y:auto;
+
+    padding:28px;
+
+    background:white;
+    border-radius:20px;
+
+    animation:popup .25s ease;
+}
+
+@keyframes popup{
+
+    from{
+        opacity:0;
+        transform:scale(.92);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.modal-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:20px;
+}
+
+.modal-top h2{
+    font-size:22px;
+}
+
+.close-btn{
+    width:32px;
+    height:32px;
+
+    border:0;
+    border-radius:50%;
+
+    background:#f1f5f9;
+
+    font-size:18px;
+}
+
+.selected-train{
+    padding:15px;
+    margin-bottom:20px;
+
+    border-radius:12px;
+
+    background:#eff6ff;
+
+    color:#1e3a8a;
+
+    font-size:10px;
+    line-height:1.8;
+}
+
+.form-group{
+    margin-bottom:14px;
+}
+
+.form-group label{
+    display:block;
+
+    margin-bottom:6px;
+
+    font-size:9px;
+    font-weight:800;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    height:44px;
+
+    padding:0 12px;
+
+    border:1px solid #dbe1ea;
+    border-radius:9px;
+
+    outline:0;
+
+    font-size:11px;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#2563eb;
+}
+
+.continue-btn{
+    width:100%;
+    height:45px;
+
+    border:0;
+    border-radius:9px;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-size:11px;
+    font-weight:800;
+}
+
+/* ================= OTP ================= */
+
+.otp-section{
+    display:none;
+}
+
+.otp-section.show{
+    display:block;
+}
+
+.otp-message{
+    padding:14px;
+    margin-bottom:15px;
+
+    border-radius:10px;
+
+    background:#f0fdf4;
+    color:#166534;
+
+    font-size:10px;
+}
+
+.otp-input{
+    text-align:center;
+
+    letter-spacing:8px;
+
+    font-size:18px !important;
+    font-weight:800;
+}
+
+/* ================= SUCCESS ================= */
+
+.success{
+    display:none;
+    text-align:center;
+}
+
+.success.show{
+    display:block;
+}
+
+.success-icon{
+    width:70px;
+    height:70px;
+
+    display:grid;
+    place-items:center;
+
+    margin:0 auto 20px;
+
+    border-radius:50%;
+
+    background:#dcfce7;
+    color:#16a34a;
+
+    font-size:35px;
+}
+
+.success p{
+    margin-top:8px;
+
+    color:#6b7280;
+
+    font-size:11px;
+    line-height:1.6;
+}
+
+.booking-id{
+    padding:14px;
+    margin:20px 0;
+
+    border-radius:10px;
+
+    background:#f1f5f9;
+
+    font-size:11px;
+    font-weight:800;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:950px){
+
+    .search-panel{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .content{
+        grid-template-columns:1fr;
+    }
+
+    .filters{
+        display:none;
+    }
+
+    .train-card{
+        grid-template-columns:1fr;
+    }
+
+    .price-box{
+        align-items:flex-start;
+    }
+}
+
+@media(max-width:650px){
+
+    header{
+        padding:0 20px;
+    }
+
+    nav{
+        display:none;
+    }
+
+    .page{
+        padding:35px 20px;
+    }
+
+    .page-top h1{
+        font-size:30px;
+    }
+
+    .search-panel{
+        grid-template-columns:1fr;
+    }
+
+    .search-btn{
+        height:45px;
+    }
+
+    .route{
+        gap:8px;
+    }
+
+    .line{
+        width:40px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header>
+
+    <a href="index.html" class="logo">
+
+        <span class="logo-icon">
+            🚆
+        </span>
+
+        TravelGo
+
+    </a>
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="flight.html">
+            Flights
+        </a>
+
+        <a href="hotels.html">
+            Hotels
+        </a>
+
+        <a href="trains.html" class="active">
+            Trains
+        </a>
+
+        <a href="buses.html">
+            Buses
+        </a>
+
+    </nav>
+
+    <a href="index.html" class="home-btn">
+        ← Home
+    </a>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="page">
+
+    <div class="page-top">
+
+        <a href="index.html" class="back">
+            ← Back to TravelGo
+        </a>
+
+        <span>
+            TRAIN BOOKING
+        </span>
+
+        <h1>
+            Book your train journey 🚆
+        </h1>
+
+        <p>
+            Search trains, compare classes and
+            reserve your seat with TravelGo.
+        </p>
+
+    </div>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <div class="search-panel">
+
+        <div class="field">
+
+            <label>
+                FROM
+            </label>
+
+            <input
+                type="text"
+                id="fromStation"
+                placeholder="Delhi"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                TO
+            </label>
+
+            <input
+                type="text"
+                id="toStation"
+                placeholder="Mumbai"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                JOURNEY DATE
+            </label>
+
+            <input
+                type="date"
+                id="journeyDate"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                PASSENGERS
+            </label>
+
+            <select id="passengers">
+
+                <option value="1">
+                    1 Passenger
+                </option>
+
+                <option value="2">
+                    2 Passengers
+                </option>
+
+                <option value="3">
+                    3 Passengers
+                </option>
+
+                <option value="4">
+                    4 Passengers
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="search-btn"
+            onclick="searchTrains()"
+        >
+            Search
+        </button>
+
+    </div>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <div class="content">
+
+
+        <!-- FILTERS -->
+
+        <aside class="filters">
+
+            <h2>
+                Filters
+            </h2>
+
+
+            <div class="filter-group">
+
+                <h3>
+                    Train Type
+                </h3>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    Rajdhani
+
+                </label>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    Shatabdi
+
+                </label>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    Vande Bharat
+
+                </label>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <h3>
+                    Departure
+                </h3>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    Morning
+
+                </label>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    Afternoon
+
+                </label>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    Evening
+
+                </label>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <h3>
+                    Class
+                </h3>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    AC First Class
+
+                </label>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    AC 2 Tier
+
+                </label>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    Sleeper
+
+                </label>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= RESULTS ================= -->
+
+        <section>
+
+            <div class="results-header">
+
+                <h2>
+                    Available Trains
+                </h2>
+
+                <select
+                    class="sort"
+                    id="sortTrains"
+                    onchange="sortTrains()"
+                >
+
+                    <option value="recommended">
+                        Recommended
+                    </option>
+
+                    <option value="price">
+                        Cheapest
+                    </option>
+
+                    <option value="time">
+                        Earliest Departure
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- TRAIN 1 -->
+
+            <article
+                class="train-card"
+                data-price="1499"
+                data-time="0600"
+            >
+
+                <div>
+
+                    <div class="train-name">
+
+                        <span class="train-icon">
+                            🚆
+                        </span>
+
+                        Vande Bharat Express
+
+                    </div>
+
+                    <div class="train-number">
+                        Train No. 22439
+                    </div>
+
+
+                    <div class="route">
+
+                        <div class="station">
+
+                            <strong>
+                                06:00
+                            </strong>
+
+                            <span>
+                                New Delhi
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="line"></div>
+
+                            <div class="duration">
+                                6h 30m
+                            </div>
+
+                        </div>
+
+
+                        <div class="station">
+
+                            <strong>
+                                12:30
+                            </strong>
+
+                            <span>
+                                Mumbai
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="classes">
+
+                        <span class="class-tag">
+                            AC Chair Car
+                        </span>
+
+                        <span class="class-tag">
+                            Executive Chair Car
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <p style="
+                        color:#16a34a;
+                        font-size:10px;
+                        font-weight:800;
+                    ">
+                        ✓ Available
+                    </p>
+
+                    <p style="
+                        margin-top:10px;
+                        color:#6b7280;
+                        font-size:9px;
+                    ">
+                        Fastest train
+                    </p>
+
+                </div>
+
+
+                <div class="price-box">
+
+                    <small>
+                        Starting from
+                    </small>
+
+                    <strong>
+                        ₹1,499
+                    </strong>
+
+                    <span>
+                        per passenger
+                    </span>
+
+                    <button
+                        class="book-btn"
+                        onclick="openBooking(
+                            'Vande Bharat Express',
+                            '22439',
+                            '06:00',
+                            '12:30',
+                            '₹1,499'
+                        )"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- TRAIN 2 -->
+
+            <article
+                class="train-card"
+                data-price="999"
+                data-time="0730"
+            >
+
+                <div>
+
+                    <div class="train-name">
+
+                        <span class="train-icon">
+                            🚆
+                        </span>
+
+                        Rajdhani Express
+
+                    </div>
+
+                    <div class="train-number">
+                        Train No. 12952
+                    </div>
+
+
+                    <div class="route">
+
+                        <div class="station">
+
+                            <strong>
+                                07:30
+                            </strong>
+
+                            <span>
+                                New Delhi
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="line"></div>
+
+                            <div class="duration">
+                                8h 15m
+                            </div>
+
+                        </div>
+
+
+                        <div class="station">
+
+                            <strong>
+                                15:45
+                            </strong>
+
+                            <span>
+                                Mumbai
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="classes">
+
+                        <span class="class-tag">
+                            AC First Class
+                        </span>
+
+                        <span class="class-tag">
+                            AC 2 Tier
+                        </span>
+
+                        <span class="class-tag">
+                            AC 3 Tier
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <p style="
+                        color:#16a34a;
+                        font-size:10px;
+                        font-weight:800;
+                    ">
+                        ✓ Available
+                    </p>
+
+                    <p style="
+                        margin-top:10px;
+                        color:#6b7280;
+                        font-size:9px;
+                    ">
+                        Meals included
+                    </p>
+
+                </div>
+
+
+                <div class="price-box">
+
+                    <small>
+                        Starting from
+                    </small>
+
+                    <strong>
+                        ₹999
+                    </strong>
+
+                    <span>
+                        per passenger
+                    </span>
+
+                    <button
+                        class="book-btn"
+                        onclick="openBooking(
+                            'Rajdhani Express',
+                            '12952',
+                            '07:30',
+                            '15:45',
+                            '₹999'
+                        )"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- TRAIN 3 -->
+
+            <article
+                class="train-card"
+                data-price="799"
+                data-time="0945"
+            >
+
+                <div>
+
+                    <div class="train-name">
+
+                        <span class="train-icon">
+                            🚆
+                        </span>
+
+                        Shatabdi Express
+
+                    </div>
+
+                    <div class="train-number">
+                        Train No. 12009
+                    </div>
+
+
+                    <div class="route">
+
+                        <div class="station">
+
+                            <strong>
+                                09:45
+                            </strong>
+
+                            <span>
+                                Delhi
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="line"></div>
+
+                            <div class="duration">
+                                5h 45m
+                            </div>
+
+                        </div>
+
+
+                        <div class="station">
+
+                            <strong>
+                                15:30
+                            </strong>
+
+                            <span>
+                                Chandigarh
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="classes">
+
+                        <span class="class-tag">
+                            AC Chair Car
+                        </span>
+
+                        <span class="class-tag">
+                            Executive
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <p style="
+                        color:#16a34a;
+                        font-size:10px;
+                        font-weight:800;
+                    ">
+                        ✓ Available
+                    </p>
+
+                    <p style="
+                        margin-top:10px;
+                        color:#6b7280;
+                        font-size:9px;
+                    ">
+                        Breakfast included
+                    </p>
+
+                </div>
+
+
+                <div class="price-box">
+
+                    <small>
+                        Starting from
+                    </small>
+
+                    <strong>
+                        ₹799
+                    </strong>
+
+                    <span>
+                        per passenger
+                    </span>
+
+                    <button
+                        class="book-btn"
+                        onclick="openBooking(
+                            'Shatabdi Express',
+                            '12009',
+                            '09:45',
+                            '15:30',
+                            '₹799'
+                        )"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- TRAIN 4 -->
+
+            <article
+                class="train-card"
+                data-price="599"
+                data-time="1830"
+            >
+
+                <div>
+
+                    <div class="train-name">
+
+                        <span class="train-icon">
+                            🚆
+                        </span>
+
+                        Superfast Express
+
+                    </div>
+
+                    <div class="train-number">
+                        Train No. 12925
+                    </div>
+
+
+                    <div class="route">
+
+                        <div class="station">
+
+                            <strong>
+                                18:30
+                            </strong>
+
+                            <span>
+                                Delhi
+                            </span>
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="line"></div>
+
+                            <div class="duration">
+                                9h 20m
+                            </div>
+
+                        </div>
+
+
+                        <div class="station">
+
+                            <strong>
+                                03:50
+                            </strong>
+
+                            <span>
+                                Jaipur
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="classes">
+
+                        <span class="class-tag">
+                            Sleeper
+                        </span>
+
+                        <span class="class-tag">
+                            AC 3 Tier
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div>
+
+                    <p style="
+                        color:#16a34a;
+                        font-size:10px;
+                        font-weight:800;
+                    ">
+                        ✓ Available
+                    </p>
+
+                    <p style="
+                        margin-top:10px;
+                        color:#6b7280;
+                        font-size:9px;
+                    ">
+                        Daily
+                    </p>
+
+                </div>
+
+
+                <div class="price-box">
+
+                    <small>
+                        Starting from
+                    </small>
+
+                    <strong>
+                        ₹599
+                    </strong>
+
+                    <span>
+                        per passenger
+                    </span>
+
+                    <button
+                        class="book-btn"
+                        onclick="openBooking(
+                            'Superfast Express',
+                            '12925',
+                            '18:30',
+                            '03:50',
+                            '₹599'
+                        )"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </article>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<!-- ================= BOOKING MODAL ================= -->
+
+<div
+    class="modal"
+    id="bookingModal"
+>
+
+    <div class="modal-box">
+
+
+        <!-- PASSENGER FORM -->
+
+        <div id="passengerForm">
+
+            <div class="modal-top">
+
+                <h2>
+                    Passenger Details
+                </h2>
+
+                <button
+                    class="close-btn"
+                    onclick="closeBooking()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div
+                class="selected-train"
+                id="selectedTrain"
+            >
+                Train details
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    PASSENGER NAME
+                </label>
+
+                <input
+                    type="text"
+                    id="passengerName"
+                    placeholder="Enter full name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    MOBILE NUMBER
+                </label>
+
+                <input
+                    type="tel"
+                    id="passengerPhone"
+                    maxlength="10"
+                    placeholder="10-digit mobile number"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    EMAIL
+                </label>
+
+                <input
+                    type="email"
+                    id="passengerEmail"
+                    placeholder="example@email.com"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    TRAVEL CLASS
+                </label>
+
+                <select id="travelClass">
+
+                    <option>
+                        AC First Class
+                    </option>
+
+                    <option>
+                        AC 2 Tier
+                    </option>
+
+                    <option>
+                        AC 3 Tier
+                    </option>
+
+                    <option>
+                        Sleeper
+                    </option>
+
+                    <option>
+                        Chair Car
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                class="continue-btn"
+                onclick="sendOTP()"
+            >
+                Continue & Send OTP
+            </button>
+
+        </div>
+
+
+        <!-- OTP -->
+
+        <div
+            class="otp-section"
+            id="otpSection"
+        >
+
+            <div class="modal-top">
+
+                <h2>
+                    Verify Mobile
+                </h2>
+
+                <button
+                    class="close-btn"
+                    onclick="closeBooking()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="otp-message">
+
+                🔐 Demo OTP sent to your mobile.
+
+                <br><br>
+
+                Use OTP:
+
+                <strong>
+                    123456
+                </strong>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    ENTER OTP
+                </label>
+
+                <input
+                    type="text"
+                    id="otpInput"
+                    class="otp-input"
+                    maxlength="6"
+                    placeholder="••••••"
+                >
+
+            </div>
+
+
+            <button
+                class="continue-btn"
+                onclick="verifyOTP()"
+            >
+                Verify & Confirm
+            </button>
+
+        </div>
+
+
+        <!-- SUCCESS -->
+
+        <div
+            class="success"
+            id="successSection"
+        >
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>
+                Ticket Booked!
+            </h2>
+
+            <p>
+                Your train booking has been
+                successfully confirmed.
+            </p>
+
+
+            <div class="booking-id">
+
+                Booking ID:
+
+                <span id="bookingId">
+                    TG000000
+                </span>
+
+            </div>
+
+
+            <button
+                class="continue-btn"
+                onclick="closeBooking()"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* ================= DATE ================= */
+
+const today = new Date();
+
+const todayString =
+    today.getFullYear() +
+    "-" +
+    String(today.getMonth()+1).padStart(2,"0") +
+    "-" +
+    String(today.getDate()).padStart(2,"0");
+
+
+document
+.getElementById("journeyDate")
+.min = todayString;
+
+
+/* ================= SEARCH ================= */
+
+function searchTrains(){
+
+    const from =
+        document
+        .getElementById("fromStation")
+        .value
+        .trim();
+
+    const to =
+        document
+        .getElementById("toStation")
+        .value
+        .trim();
+
+    const date =
+        document
+        .getElementById("journeyDate")
+        .value;
+
+
+    if(!from){
+
+        alert(
+            "Please enter departure station."
+        );
+
+        return;
+    }
+
+
+    if(!to){
+
+        alert(
+            "Please enter destination station."
+        );
+
+        return;
+    }
+
+
+    if(!date){
+
+        alert(
+            "Please select journey date."
+        );
+
+        return;
+    }
+
+
+    alert(
+        `Searching trains from ${from} to ${to}...`
+    );
+
+}
+
+
+/* ================= SORT ================= */
+
+function sortTrains(){
+
+    const type =
+        document
+        .getElementById("sortTrains")
+        .value;
+
+    const container =
+        document.querySelector("section");
+
+    const cards =
+        Array.from(
+            document.querySelectorAll(
+                ".train-card"
+            )
+        );
+
+
+    if(type === "price"){
+
+        cards.sort(
+            (a,b) =>
+            Number(a.dataset.price) -
+            Number(b.dataset.price)
+        );
+
+    }
+
+
+    if(type === "time"){
+
+        cards.sort(
+            (a,b) =>
+            Number(a.dataset.time) -
+            Number(b.dataset.time)
+        );
+
+    }
+
+
+    cards.forEach(card => {
+
+        container.appendChild(card);
+
+    });
+
+}
+
+
+/* ================= SELECTED TRAIN ================= */
+
+let selectedTrain = {};
+
+
+/* ================= OPEN BOOKING ================= */
+
+function openBooking(
+    name,
+    number,
+    departure,
+    arrival,
+    price
+){
+
+    selectedTrain = {
+        name,
+        number,
+        departure,
+        arrival,
+        price
+    };
+
+
+    document
+    .getElementById("selectedTrain")
+    .innerHTML = `
+
+        <strong>
+            ${name}
+        </strong>
+
+        <br>
+
+        Train No:
+        ${number}
+
+        <br>
+
+        ${departure}
+        → 
+        ${arrival}
+
+        <br>
+
+        Starting fare:
+        <strong>
+            ${price}
+        </strong>
+
+    `;
+
+
+    document
+    .getElementById("bookingModal")
+    .classList.add("show");
+
+
+    document
+    .getElementById("passengerForm")
+    .style.display = "block";
+
+
+    document
+    .getElementById("otpSection")
+    .classList.remove("show");
+
+
+    document
+    .getElementById("successSection")
+    .classList.remove("show");
+
+}
+
+
+/* ================= CLOSE ================= */
+
+function closeBooking(){
+
+    document
+    .getElementById("bookingModal")
+    .classList.remove("show");
+
+}
+
+
+/* ================= SEND OTP ================= */
+
+function sendOTP(){
+
+    const name =
+        document
+        .getElementById("passengerName")
+        .value
+        .trim();
+
+    const phone =
+        document
+        .getElementById("passengerPhone")
+        .value
+        .trim();
+
+    const email =
+        document
+        .getElementById("passengerEmail")
+        .value
+        .trim();
+
+
+    if(!name){
+
+        alert(
+            "Please enter passenger name."
+        );
+
+        return;
+    }
+
+
+    if(
+        !/^[6-9]\d{9}$/.test(phone)
+    ){
+
+        alert(
+            "Please enter a valid 10-digit mobile number."
+        );
+
+        return;
+    }
+
+
+    if(
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        .test(email)
+    ){
+
+        alert(
+            "Please enter a valid email."
+        );
+
+        return;
+    }
+
+
+    selectedTrain.passenger =
+        name;
+
+    selectedTrain.phone =
+        phone;
+
+    selectedTrain.email =
+        email;
+
+    selectedTrain.class =
+        document
+        .getElementById("travelClass")
+        .value;
+
+
+    document
+    .getElementById("passengerForm")
+    .style.display = "none";
+
+
+    document
+    .getElementById("otpSection")
+    .classList.add("show");
+
+
+    console.log(
+        "Demo OTP: 123456"
+    );
+
+}
+
+
+/* ================= VERIFY OTP ================= */
+
+function verifyOTP(){
+
+    const otp =
+        document
+        .getElementById("otpInput")
+        .value
+        .trim();
+
+
+    if(otp !== "123456"){
+
+        alert(
+            "Invalid OTP. Use 123456 for this demo."
+        );
+
+        return;
+    }
+
+
+    const bookingId =
+        "TG" +
+        Math.floor(
+            100000 +
+            Math.random() * 900000
+        );
+
+
+    document
+    .getElementById("bookingId")
+    .textContent =
+        bookingId;
+
+
+    document
+    .getElementById("otpSection")
+    .classList.remove("show");
+
+
+    document
+    .getElementById("successSection")
+    .classList.add("show");
+
+
+    console.log(
+        "Train booking:",
+        selectedTrain
+    );
+
+}
+
+
+/* ================= PHONE ================= */
+
+document
+.getElementById("passengerPhone")
+.addEventListener(
+    "input",
+    function(){
+
+        this.value =
+            this.value.replace(
+                /\D/g,
+                ""
+            );
+
+    }
+);
+
+
+/* ================= OTP ================= */
+
+document
+.getElementById("otpInput")
+.addEventListener(
+    "input",
+    function(){
+
+        this.value =
+            this.value.replace(
+                /\D/g,
+                ""
+            );
+
+    }
+);
+
+
+/* ================= OUTSIDE CLICK ================= */
+
+document
+.getElementById("bookingModal")
+.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeBooking();
+
+        }
+
+    }
+);
+
+
+/* ================= ESC ================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Escape"
+        ){
+
+            closeBooking();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

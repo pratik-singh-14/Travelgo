@@ -1,0 +1,2160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TravelGo | Hotels</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    color:#111827;
+}
+
+a{
+    text-decoration:none;
+}
+
+button,input,select{
+    font-family:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+/* NAVBAR */
+
+header{
+    height:70px;
+    padding:0 6%;
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    color:#2563eb;
+    font-size:22px;
+    font-weight:800;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:12px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #06b6d4
+    );
+
+    color:white;
+}
+
+nav{
+    display:flex;
+    gap:25px;
+}
+
+nav a{
+    color:#4b5563;
+    font-size:13px;
+    font-weight:700;
+}
+
+nav a:hover,
+nav a.active{
+    color:#2563eb;
+}
+
+.home-btn{
+    padding:9px 15px;
+
+    border:0;
+    border-radius:9px;
+
+    background:#2563eb;
+    color:white;
+
+    font-size:11px;
+    font-weight:700;
+}
+
+/* MAIN */
+
+.page{
+    max-width:1250px;
+    margin:auto;
+    padding:55px 6%;
+}
+
+.back{
+    display:inline-block;
+    margin-bottom:20px;
+
+    color:#2563eb;
+    font-size:11px;
+    font-weight:700;
+}
+
+.page-top span{
+    color:#2563eb;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:2px;
+}
+
+.page-top h1{
+    margin-top:8px;
+    font-size:38px;
+}
+
+.page-top p{
+    margin-top:8px;
+    color:#6b7280;
+    font-size:12px;
+}
+
+/* SEARCH */
+
+.search-panel{
+    display:grid;
+    grid-template-columns:
+        1.3fr 1fr 1fr 1fr auto;
+
+    gap:10px;
+
+    padding:18px;
+    margin:25px 0 30px;
+
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:18px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.06);
+}
+
+.field{
+    padding:11px;
+
+    border:1px solid #e5e7eb;
+    border-radius:9px;
+}
+
+.field label{
+    display:block;
+    margin-bottom:6px;
+
+    color:#6b7280;
+    font-size:8px;
+    font-weight:800;
+}
+
+.field input,
+.field select{
+    width:100%;
+    border:0;
+    outline:0;
+    background:transparent;
+
+    font-size:11px;
+}
+
+.search-btn{
+    border:0;
+    padding:0 22px;
+
+    border-radius:9px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #06b6d4
+    );
+
+    color:white;
+
+    font-size:11px;
+    font-weight:800;
+}
+
+/* RESULTS */
+
+.results-layout{
+    display:grid;
+    grid-template-columns:220px 1fr;
+    gap:20px;
+}
+
+/* FILTERS */
+
+.filters{
+    height:fit-content;
+
+    padding:20px;
+
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+}
+
+.filters h2{
+    margin-bottom:20px;
+    font-size:16px;
+}
+
+.filter-group{
+    padding-bottom:18px;
+    margin-bottom:18px;
+
+    border-bottom:1px solid #e5e7eb;
+}
+
+.filter-group:last-child{
+    border-bottom:0;
+}
+
+.filter-group h3{
+    margin-bottom:10px;
+    font-size:11px;
+}
+
+.filter-option{
+    display:flex;
+    align-items:center;
+    gap:8px;
+
+    margin:9px 0;
+
+    color:#6b7280;
+    font-size:10px;
+}
+
+/* RESULTS HEADER */
+
+.results-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    margin-bottom:15px;
+}
+
+.results-header h2{
+    font-size:18px;
+}
+
+.sort{
+    padding:9px;
+
+    background:white;
+    border:1px solid #e5e7eb;
+    border-radius:8px;
+
+    font-size:10px;
+}
+
+/* HOTEL CARD */
+
+.hotel-card{
+    display:grid;
+
+    grid-template-columns:
+        190px 1fr 170px;
+
+    gap:18px;
+
+    margin-bottom:15px;
+    padding:15px;
+
+    background:white;
+
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+
+    transition:.25s;
+}
+
+.hotel-card:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.08);
+}
+
+/* IMAGE */
+
+.hotel-image{
+    min-height:150px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #06b6d4
+        );
+
+    color:white;
+
+    font-size:55px;
+}
+
+/* HOTEL INFO */
+
+.hotel-info{
+    padding:5px 0;
+}
+
+.hotel-info h3{
+    margin-bottom:7px;
+    font-size:18px;
+}
+
+.location{
+    margin-bottom:10px;
+
+    color:#6b7280;
+    font-size:10px;
+}
+
+.stars{
+    color:#f59e0b;
+    font-size:12px;
+}
+
+.rating{
+    display:inline-block;
+
+    margin-left:7px;
+    padding:4px 7px;
+
+    border-radius:6px;
+
+    background:#dcfce7;
+    color:#166534;
+
+    font-size:9px;
+    font-weight:800;
+}
+
+.features{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+
+    margin-top:14px;
+}
+
+.feature{
+    padding:5px 8px;
+
+    border-radius:6px;
+
+    background:#f1f5f9;
+
+    color:#64748b;
+
+    font-size:8px;
+}
+
+/* PRICE */
+
+.hotel-price{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:flex-end;
+}
+
+.hotel-price small{
+    color:#6b7280;
+    font-size:8px;
+}
+
+.hotel-price strong{
+    margin:5px 0;
+
+    font-size:21px;
+}
+
+.tax{
+    color:#6b7280;
+    font-size:8px;
+}
+
+.book-btn{
+    margin-top:12px;
+
+    padding:10px 17px;
+
+    border:0;
+    border-radius:8px;
+
+    background:#2563eb;
+    color:white;
+
+    font-size:9px;
+    font-weight:800;
+}
+
+.book-btn:hover{
+    background:#1d4ed8;
+}
+
+/* MODAL */
+
+.modal{
+    position:fixed;
+    inset:0;
+
+    z-index:5000;
+
+    display:none;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    background:rgba(0,0,0,.65);
+
+    backdrop-filter:blur(5px);
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(500px,100%);
+    max-height:90vh;
+    overflow-y:auto;
+
+    padding:28px;
+
+    background:white;
+    border-radius:20px;
+
+    animation:popup .25s ease;
+}
+
+@keyframes popup{
+    from{
+        opacity:0;
+        transform:scale(.92);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.modal-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:20px;
+}
+
+.modal-top h2{
+    font-size:22px;
+}
+
+.close-btn{
+    width:32px;
+    height:32px;
+
+    border:0;
+    border-radius:50%;
+
+    background:#f1f5f9;
+
+    font-size:18px;
+}
+
+.selected-hotel{
+    padding:15px;
+    margin-bottom:20px;
+
+    border-radius:12px;
+
+    background:#eff6ff;
+    color:#1e3a8a;
+
+    font-size:11px;
+}
+
+.form-group{
+    margin-bottom:13px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:6px;
+
+    font-size:9px;
+    font-weight:800;
+}
+
+.form-group input,
+.form-group select{
+    width:100%;
+    height:44px;
+
+    padding:0 12px;
+
+    border:1px solid #dbe1ea;
+    border-radius:9px;
+
+    outline:0;
+
+    font-size:11px;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#2563eb;
+}
+
+.continue-btn{
+    width:100%;
+    height:45px;
+
+    margin-top:5px;
+
+    border:0;
+    border-radius:9px;
+
+    background:#2563eb;
+    color:white;
+
+    font-size:11px;
+    font-weight:800;
+}
+
+/* OTP */
+
+.otp-section{
+    display:none;
+}
+
+.otp-section.show{
+    display:block;
+}
+
+.otp-message{
+    padding:14px;
+    margin-bottom:15px;
+
+    border-radius:10px;
+
+    background:#f0fdf4;
+    color:#166534;
+
+    font-size:10px;
+}
+
+.otp-input{
+    text-align:center;
+
+    letter-spacing:8px;
+
+    font-size:18px !important;
+    font-weight:800;
+}
+
+/* SUCCESS */
+
+.success{
+    display:none;
+    text-align:center;
+}
+
+.success.show{
+    display:block;
+}
+
+.success-icon{
+    width:70px;
+    height:70px;
+
+    display:grid;
+    place-items:center;
+
+    margin:0 auto 20px;
+
+    border-radius:50%;
+
+    background:#dcfce7;
+    color:#16a34a;
+
+    font-size:35px;
+}
+
+.success h2{
+    margin-bottom:8px;
+}
+
+.success p{
+    color:#6b7280;
+    font-size:11px;
+    line-height:1.6;
+}
+
+.booking-id{
+    margin:20px 0;
+    padding:13px;
+
+    border-radius:10px;
+
+    background:#f1f5f9;
+
+    font-weight:800;
+}
+
+/* NO RESULTS */
+
+.no-results{
+    display:none;
+
+    padding:40px;
+
+    text-align:center;
+
+    background:white;
+    border-radius:15px;
+
+    color:#6b7280;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+
+    .search-panel{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .results-layout{
+        grid-template-columns:1fr;
+    }
+
+    .filters{
+        display:none;
+    }
+
+    .hotel-card{
+        grid-template-columns:160px 1fr;
+    }
+
+    .hotel-price{
+        grid-column:2;
+        align-items:flex-start;
+    }
+}
+
+@media(max-width:650px){
+
+    header{
+        padding:0 20px;
+    }
+
+    nav{
+        display:none;
+    }
+
+    .page{
+        padding:35px 20px;
+    }
+
+    .page-top h1{
+        font-size:30px;
+    }
+
+    .search-panel{
+        grid-template-columns:1fr;
+    }
+
+    .search-btn{
+        height:45px;
+    }
+
+    .hotel-card{
+        grid-template-columns:1fr;
+    }
+
+    .hotel-price{
+        grid-column:auto;
+    }
+
+    .hotel-image{
+        min-height:180px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<header>
+
+    <a href="index.html" class="logo">
+
+        <span class="logo-icon">
+            🏨
+        </span>
+
+        TravelGo
+
+    </a>
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="flight.html">
+            Flights
+        </a>
+
+        <a href="hotels.html" class="active">
+            Hotels
+        </a>
+
+        <a href="trains.html">
+            Trains
+        </a>
+
+        <a href="buses.html">
+            Buses
+        </a>
+
+    </nav>
+
+    <a href="index.html" class="home-btn">
+        ← Home
+    </a>
+
+</header>
+
+
+<!-- MAIN -->
+
+<main class="page">
+
+    <div class="page-top">
+
+        <a href="index.html" class="back">
+            ← Back to TravelGo
+        </a>
+
+        <span>
+            HOTEL BOOKING
+        </span>
+
+        <h1>
+            Find your perfect stay 🏨
+        </h1>
+
+        <p>
+            Search hotels, compare prices and
+            book your stay with TravelGo.
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-panel">
+
+        <div class="field">
+
+            <label>
+                DESTINATION
+            </label>
+
+            <input
+                type="text"
+                id="destination"
+                placeholder="Mumbai"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                CHECK-IN
+            </label>
+
+            <input
+                type="date"
+                id="checkIn"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                CHECK-OUT
+            </label>
+
+            <input
+                type="date"
+                id="checkOut"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                GUESTS & ROOMS
+            </label>
+
+            <select id="guests">
+
+                <option value="1">
+                    1 Guest, 1 Room
+                </option>
+
+                <option value="2">
+                    2 Guests, 1 Room
+                </option>
+
+                <option value="3">
+                    3 Guests, 1 Room
+                </option>
+
+                <option value="4">
+                    4 Guests, 2 Rooms
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="search-btn"
+            onclick="searchHotels()"
+        >
+            Search
+        </button>
+
+    </div>
+
+
+    <!-- RESULTS -->
+
+    <div class="results-layout">
+
+
+        <!-- FILTERS -->
+
+        <aside class="filters">
+
+            <h2>
+                Filters
+            </h2>
+
+
+            <div class="filter-group">
+
+                <h3>
+                    Property Type
+                </h3>
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        class="filter"
+                    >
+
+                    Hotel
+
+                </label>
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        class="filter"
+                    >
+
+                    Resort
+
+                </label>
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        class="filter"
+                    >
+
+                    Villa
+
+                </label>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <h3>
+                    Rating
+                </h3>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    ⭐ 5 Star
+
+                </label>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    ⭐ 4 Star
+
+                </label>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    ⭐ 3 Star
+
+                </label>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <h3>
+                    Facilities
+                </h3>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    Swimming Pool
+
+                </label>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    Free Wi-Fi
+
+                </label>
+
+                <label class="filter-option">
+
+                    <input type="checkbox">
+
+                    Breakfast
+
+                </label>
+
+            </div>
+
+        </aside>
+
+
+        <!-- HOTEL RESULTS -->
+
+        <section class="results">
+
+            <div class="results-header">
+
+                <h2>
+                    Available Hotels
+                </h2>
+
+                <select
+                    class="sort"
+                    id="sortHotels"
+                    onchange="sortHotels()"
+                >
+
+                    <option value="recommended">
+                        Recommended
+                    </option>
+
+                    <option value="price">
+                        Cheapest
+                    </option>
+
+                    <option value="rating">
+                        Highest Rated
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- HOTEL 1 -->
+
+            <article
+                class="hotel-card"
+                data-price="2499"
+                data-rating="4.8"
+            >
+
+                <div class="hotel-image">
+                    🏨
+                </div>
+
+
+                <div class="hotel-info">
+
+                    <h3>
+                        Grand Palace Hotel
+                    </h3>
+
+                    <div class="location">
+                        📍 Mumbai, Maharashtra
+                    </div>
+
+                    <span class="stars">
+                        ★★★★★
+                    </span>
+
+                    <span class="rating">
+                        4.8 Excellent
+                    </span>
+
+                    <div class="features">
+
+                        <span class="feature">
+                            Wi-Fi
+                        </span>
+
+                        <span class="feature">
+                            Pool
+                        </span>
+
+                        <span class="feature">
+                            Breakfast
+                        </span>
+
+                        <span class="feature">
+                            AC
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hotel-price">
+
+                    <small>
+                        Starting from
+                    </small>
+
+                    <strong>
+                        ₹2,499
+                    </strong>
+
+                    <span class="tax">
+                        + taxes & fees
+                    </span>
+
+                    <button
+                        class="book-btn"
+                        onclick="openBooking(
+                            'Grand Palace Hotel',
+                            'Mumbai',
+                            '4.8',
+                            '₹2,499'
+                        )"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- HOTEL 2 -->
+
+            <article
+                class="hotel-card"
+                data-price="3199"
+                data-rating="4.6"
+            >
+
+                <div class="hotel-image">
+                    🌴
+                </div>
+
+
+                <div class="hotel-info">
+
+                    <h3>
+                        Ocean View Resort
+                    </h3>
+
+                    <div class="location">
+                        📍 Goa, India
+                    </div>
+
+                    <span class="stars">
+                        ★★★★★
+                    </span>
+
+                    <span class="rating">
+                        4.6 Excellent
+                    </span>
+
+                    <div class="features">
+
+                        <span class="feature">
+                            Beach Access
+                        </span>
+
+                        <span class="feature">
+                            Pool
+                        </span>
+
+                        <span class="feature">
+                            Wi-Fi
+                        </span>
+
+                        <span class="feature">
+                            Breakfast
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hotel-price">
+
+                    <small>
+                        Starting from
+                    </small>
+
+                    <strong>
+                        ₹3,199
+                    </strong>
+
+                    <span class="tax">
+                        + taxes & fees
+                    </span>
+
+                    <button
+                        class="book-btn"
+                        onclick="openBooking(
+                            'Ocean View Resort',
+                            'Goa',
+                            '4.6',
+                            '₹3,199'
+                        )"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- HOTEL 3 -->
+
+            <article
+                class="hotel-card"
+                data-price="1899"
+                data-rating="4.3"
+            >
+
+                <div class="hotel-image">
+                    🏢
+                </div>
+
+
+                <div class="hotel-info">
+
+                    <h3>
+                        City Comfort Inn
+                    </h3>
+
+                    <div class="location">
+                        📍 Delhi, India
+                    </div>
+
+                    <span class="stars">
+                        ★★★★☆
+                    </span>
+
+                    <span class="rating">
+                        4.3 Very Good
+                    </span>
+
+                    <div class="features">
+
+                        <span class="feature">
+                            Wi-Fi
+                        </span>
+
+                        <span class="feature">
+                            AC
+                        </span>
+
+                        <span class="feature">
+                            Parking
+                        </span>
+
+                        <span class="feature">
+                            Breakfast
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hotel-price">
+
+                    <small>
+                        Starting from
+                    </small>
+
+                    <strong>
+                        ₹1,899
+                    </strong>
+
+                    <span class="tax">
+                        + taxes & fees
+                    </span>
+
+                    <button
+                        class="book-btn"
+                        onclick="openBooking(
+                            'City Comfort Inn',
+                            'Delhi',
+                            '4.3',
+                            '₹1,899'
+                        )"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <!-- HOTEL 4 -->
+
+            <article
+                class="hotel-card"
+                data-price="4299"
+                data-rating="4.9"
+            >
+
+                <div class="hotel-image">
+                    🏝️
+                </div>
+
+
+                <div class="hotel-info">
+
+                    <h3>
+                        Royal Paradise Resort
+                    </h3>
+
+                    <div class="location">
+                        📍 Jaipur, Rajasthan
+                    </div>
+
+                    <span class="stars">
+                        ★★★★★
+                    </span>
+
+                    <span class="rating">
+                        4.9 Outstanding
+                    </span>
+
+                    <div class="features">
+
+                        <span class="feature">
+                            Luxury
+                        </span>
+
+                        <span class="feature">
+                            Pool
+                        </span>
+
+                        <span class="feature">
+                            Spa
+                        </span>
+
+                        <span class="feature">
+                            Wi-Fi
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="hotel-price">
+
+                    <small>
+                        Starting from
+                    </small>
+
+                    <strong>
+                        ₹4,299
+                    </strong>
+
+                    <span class="tax">
+                        + taxes & fees
+                    </span>
+
+                    <button
+                        class="book-btn"
+                        onclick="openBooking(
+                            'Royal Paradise Resort',
+                            'Jaipur',
+                            '4.9',
+                            '₹4,299'
+                        )"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </article>
+
+
+            <div
+                class="no-results"
+                id="noResults"
+            >
+                No hotels found. Try another destination.
+            </div>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+<!-- BOOKING MODAL -->
+
+<div
+    class="modal"
+    id="bookingModal"
+>
+
+    <div class="modal-box">
+
+
+        <!-- BOOKING FORM -->
+
+        <div id="bookingForm">
+
+            <div class="modal-top">
+
+                <h2>
+                    Guest Details
+                </h2>
+
+                <button
+                    class="close-btn"
+                    onclick="closeBooking()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div
+                class="selected-hotel"
+                id="selectedHotel"
+            >
+                Hotel details
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    GUEST FULL NAME
+                </label>
+
+                <input
+                    type="text"
+                    id="guestName"
+                    placeholder="Enter your name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    MOBILE NUMBER
+                </label>
+
+                <input
+                    type="tel"
+                    id="guestPhone"
+                    maxlength="10"
+                    placeholder="10-digit mobile number"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    EMAIL
+                </label>
+
+                <input
+                    type="email"
+                    id="guestEmail"
+                    placeholder="example@email.com"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    NUMBER OF GUESTS
+                </label>
+
+                <select id="bookingGuests">
+
+                    <option>
+                        1 Guest
+                    </option>
+
+                    <option>
+                        2 Guests
+                    </option>
+
+                    <option>
+                        3 Guests
+                    </option>
+
+                    <option>
+                        4 Guests
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                class="continue-btn"
+                onclick="sendOTP()"
+            >
+                Continue & Send OTP
+            </button>
+
+        </div>
+
+
+        <!-- OTP -->
+
+        <div
+            class="otp-section"
+            id="otpSection"
+        >
+
+            <div class="modal-top">
+
+                <h2>
+                    Verify Mobile
+                </h2>
+
+                <button
+                    class="close-btn"
+                    onclick="closeBooking()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="otp-message">
+
+                🔐 Demo OTP sent to your mobile.
+                Enter <strong>123456</strong> to continue.
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    ENTER OTP
+                </label>
+
+                <input
+                    type="text"
+                    id="otpInput"
+                    class="otp-input"
+                    maxlength="6"
+                    placeholder="••••••"
+                >
+
+            </div>
+
+
+            <button
+                class="continue-btn"
+                onclick="verifyOTP()"
+            >
+                Verify & Confirm Booking
+            </button>
+
+        </div>
+
+
+        <!-- SUCCESS -->
+
+        <div
+            class="success"
+            id="successSection"
+        >
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>
+                Hotel Booked!
+            </h2>
+
+            <p>
+                Your hotel booking has been
+                successfully confirmed.
+            </p>
+
+
+            <div class="booking-id">
+
+                Booking ID:
+                <span id="bookingId">
+                    TG000000
+                </span>
+
+            </div>
+
+
+            <button
+                class="continue-btn"
+                onclick="closeBooking()"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   DATE SETUP
+========================= */
+
+const today = new Date();
+
+const todayString =
+    today.getFullYear() +
+    "-" +
+    String(today.getMonth() + 1).padStart(2,"0") +
+    "-" +
+    String(today.getDate()).padStart(2,"0");
+
+
+document.getElementById("checkIn").min =
+    todayString;
+
+document.getElementById("checkOut").min =
+    todayString;
+
+
+/* =========================
+   CHECKOUT DATE
+========================= */
+
+document
+.getElementById("checkIn")
+.addEventListener(
+    "change",
+    function(){
+
+        document
+        .getElementById("checkOut")
+        .min = this.value;
+
+    }
+);
+
+
+/* =========================
+   SEARCH HOTELS
+========================= */
+
+function searchHotels(){
+
+    const destination =
+        document
+        .getElementById("destination")
+        .value
+        .trim();
+
+    const checkIn =
+        document
+        .getElementById("checkIn")
+        .value;
+
+    const checkOut =
+        document
+        .getElementById("checkOut")
+        .value;
+
+
+    if(!destination){
+
+        alert(
+            "Please enter a destination."
+        );
+
+        return;
+    }
+
+
+    if(!checkIn){
+
+        alert(
+            "Please select check-in date."
+        );
+
+        return;
+    }
+
+
+    if(!checkOut){
+
+        alert(
+            "Please select check-out date."
+        );
+
+        return;
+    }
+
+
+    if(
+        new Date(checkOut)
+        <=
+        new Date(checkIn)
+    ){
+
+        alert(
+            "Check-out must be after check-in."
+        );
+
+        return;
+    }
+
+
+    const cards =
+        document.querySelectorAll(
+            ".hotel-card"
+        );
+
+
+    cards.forEach(card => {
+
+        const location =
+            card
+            .querySelector(".location")
+            .textContent
+            .toLowerCase();
+
+        const search =
+            destination.toLowerCase();
+
+
+        /*
+          Demo search:
+          matching locations stay visible.
+          For cities not in demo data,
+          all hotels remain visible.
+        */
+
+        if(
+            location.includes(search) ||
+            search.length < 2
+        ){
+
+            card.style.display = "grid";
+
+        }else{
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+
+    const visible =
+        Array.from(
+            cards
+        ).filter(
+            card =>
+            card.style.display !== "none"
+        );
+
+
+    document
+    .getElementById("noResults")
+    .style.display =
+        visible.length === 0
+        ? "block"
+        : "none";
+
+}
+
+
+/* =========================
+   SORT HOTELS
+========================= */
+
+function sortHotels(){
+
+    const value =
+        document
+        .getElementById("sortHotels")
+        .value;
+
+    const results =
+        document.querySelector(".results");
+
+
+    const cards =
+        Array.from(
+            document.querySelectorAll(
+                ".hotel-card"
+            )
+        );
+
+
+    if(value === "price"){
+
+        cards.sort(
+            (a,b) =>
+            Number(a.dataset.price) -
+            Number(b.dataset.price)
+        );
+
+    }
+
+
+    if(value === "rating"){
+
+        cards.sort(
+            (a,b) =>
+            Number(b.dataset.rating) -
+            Number(a.dataset.rating)
+        );
+
+    }
+
+
+    cards.forEach(card => {
+
+        results.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================
+   SELECTED HOTEL
+========================= */
+
+let selectedHotel = {};
+
+
+/* =========================
+   OPEN BOOKING
+========================= */
+
+function openBooking(
+    name,
+    city,
+    rating,
+    price
+){
+
+    selectedHotel = {
+        name,
+        city,
+        rating,
+        price
+    };
+
+
+    document
+    .getElementById("selectedHotel")
+    .innerHTML = `
+
+        <strong>
+            ${name}
+        </strong>
+
+        <br>
+
+        📍 ${city}
+
+        <br>
+
+        ⭐ ${rating}
+
+        <br>
+
+        Starting from
+        <strong>
+            ${price}
+        </strong>
+
+    `;
+
+
+    document
+    .getElementById("bookingModal")
+    .classList.add("show");
+
+
+    document
+    .getElementById("bookingForm")
+    .style.display = "block";
+
+
+    document
+    .getElementById("otpSection")
+    .classList.remove("show");
+
+
+    document
+    .getElementById("successSection")
+    .classList.remove("show");
+
+}
+
+
+/* =========================
+   CLOSE BOOKING
+========================= */
+
+function closeBooking(){
+
+    document
+    .getElementById("bookingModal")
+    .classList.remove("show");
+
+}
+
+
+/* =========================
+   SEND OTP
+========================= */
+
+function sendOTP(){
+
+    const name =
+        document
+        .getElementById("guestName")
+        .value
+        .trim();
+
+    const phone =
+        document
+        .getElementById("guestPhone")
+        .value
+        .trim();
+
+    const email =
+        document
+        .getElementById("guestEmail")
+        .value
+        .trim();
+
+
+    if(!name){
+
+        alert(
+            "Please enter guest name."
+        );
+
+        return;
+    }
+
+
+    if(
+        !/^[6-9]\d{9}$/.test(phone)
+    ){
+
+        alert(
+            "Please enter a valid 10-digit Indian mobile number."
+        );
+
+        return;
+    }
+
+
+    if(
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        .test(email)
+    ){
+
+        alert(
+            "Please enter a valid email."
+        );
+
+        return;
+    }
+
+
+    selectedHotel.guestName =
+        name;
+
+    selectedHotel.phone =
+        phone;
+
+    selectedHotel.email =
+        email;
+
+
+    document
+    .getElementById("bookingForm")
+    .style.display = "none";
+
+
+    document
+    .getElementById("otpSection")
+    .classList.add("show");
+
+
+    console.log(
+        "Demo OTP: 123456"
+    );
+
+}
+
+
+/* =========================
+   VERIFY OTP
+========================= */
+
+function verifyOTP(){
+
+    const otp =
+        document
+        .getElementById("otpInput")
+        .value
+        .trim();
+
+
+    if(otp !== "123456"){
+
+        alert(
+            "Invalid OTP. Use 123456 for this demo."
+        );
+
+        return;
+    }
+
+
+    const bookingId =
+        "TG" +
+        Math.floor(
+            100000 +
+            Math.random() * 900000
+        );
+
+
+    document
+    .getElementById("bookingId")
+    .textContent =
+        bookingId;
+
+
+    document
+    .getElementById("otpSection")
+    .classList.remove("show");
+
+
+    document
+    .getElementById("successSection")
+    .classList.add("show");
+
+
+    console.log(
+        "Hotel booking:",
+        selectedHotel
+    );
+
+}
+
+
+/* =========================
+   PHONE INPUT
+========================= */
+
+document
+.getElementById("guestPhone")
+.addEventListener(
+    "input",
+    function(){
+
+        this.value =
+            this.value.replace(
+                /\D/g,
+                ""
+            );
+
+    }
+);
+
+
+/* =========================
+   OTP INPUT
+========================= */
+
+document
+.getElementById("otpInput")
+.addEventListener(
+    "input",
+    function(){
+
+        this.value =
+            this.value.replace(
+                /\D/g,
+                ""
+            );
+
+    }
+);
+
+
+/* =========================
+   MODAL OUTSIDE CLICK
+========================= */
+
+document
+.getElementById("bookingModal")
+.addEventListener(
+    "click",
+    function(event){
+
+        if(
+            event.target === this
+        ){
+
+            closeBooking();
+
+        }
+
+    }
+);
+
+
+/* =========================
+   ESC KEY
+========================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Escape"
+        ){
+
+            closeBooking();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="TravelGo - Book flights, hotels, buses and unforgettable trips."
+    >
+
+    <title>TravelGo | Explore the World</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <span class="logo-icon">✈</span>
+            <span>TravelGo</span>
+        </div>
+
+
+        <nav class="nav-menu">
+
+            <a href="#home" class="active">
+                Home
+            </a>
+
+            <a href="destinations">
+                Destinations
+            </a>
+
+            <a href="hotels.html">
+                Hotels
+            </a>
+
+            <a href="flight.html">
+                Flights
+            </a>
+
+            <a href="offers.html">
+                Offers
+            </a>
+
+        </nav>
+
+
+        <div class="nav-buttons">
+
+            <button
+                class="theme-button"
+                id="themeButton"
+                title="Change theme"
+            >
+                🌙
+            </button>
+
+            <button
+                class="login-button"
+                id="loginButton"
+            >
+                Login
+            </button>
+
+            <button
+                class="signup-button"
+                id="signupButton"
+            >
+                Sign Up
+            </button>
+
+        </div>
+
+
+        <button
+            class="mobile-menu"
+            id="mobileMenu"
+        >
+            ☰
+        </button>
+
+    </header>
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <main>
+
+        <section
+            class="hero"
+            id="home"
+        >
+
+            <div class="hero-content">
+
+                <span class="hero-tag">
+                    🌎 DISCOVER THE WORLD
+                </span>
+
+                <h1>
+                    Your journey
+                    <br>
+                    <span>starts here.</span>
+                </h1>
+
+                <p>
+                    Discover beautiful destinations,
+                    find the best stays and book your
+                    next adventure with TravelGo.
+                </p>
+
+            </div>
+
+
+            <!-- SEARCH CARD -->
+
+            <div class="booking-search">
+
+                <!-- Search Type -->
+
+                <div class="booking-tabs">
+
+                    <button
+                        class="booking-tab active"
+                        data-type="flight"
+                    >
+                        ✈️ Flight
+                    </button>
+
+                    <button
+                        class="booking-tab"
+                        data-type="hotel"
+                    >
+                        🏨 Hotel
+                    </button>
+
+                    <button
+                        class="booking-tab"
+                        data-type="train"
+                    >
+                        🚆 Train
+                    </button>
+
+                    <button
+                        class="booking-tab"
+                        data-type="bus"
+                    >
+                        🚌 Bus
+                    </button>
+
+                </div>
+
+
+                <!-- Search Form -->
+
+                <div class="search-form">
+
+                    <!-- FROM -->
+
+                    <div class="input-box">
+
+                        <span class="input-icon">
+                            📍
+                        </span>
+
+                        <div>
+
+                            <label>
+                                From
+                            </label>
+
+                            <input
+                                type="text"
+                                id="from"
+                                placeholder="Delhi"
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SWAP -->
+
+                    <button
+                        class="swap-button"
+                        id="swapButton"
+                        title="Swap locations"
+                    >
+                        ⇄
+                    </button>
+
+
+                    <!-- TO -->
+
+                    <div class="input-box">
+
+                        <span class="input-icon">
+                            📍
+                        </span>
+
+                        <div>
+
+                            <label>
+                                To
+                            </label>
+
+                            <input
+                                type="text"
+                                id="to"
+                                placeholder="Goa"
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- DATE -->
+
+                    <div class="input-box">
+
+                        <span class="input-icon">
+                            📅
+                        </span>
+
+                        <div>
+
+                            <label>
+                                Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="travelDate"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- TRAVELERS -->
+
+                    <div class="input-box">
+
+                        <span class="input-icon">
+                            👥
+                        </span>
+
+                        <div>
+
+                            <label>
+                                Travelers
+                            </label>
+
+                            <select id="travelers">
+
+                                <option value="1">
+                                    1 Traveler
+                                </option>
+
+                                <option value="2">
+                                    2 Travelers
+                                </option>
+
+                                <option value="3">
+                                    3 Travelers
+                                </option>
+
+                                <option value="4">
+                                    4 Travelers
+                                </option>
+
+                                <option value="5">
+                                    5 Travelers
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SEARCH -->
+
+                    <button
+                        class="search-button"
+                        id="searchButton"
+                    >
+                        Search
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             QUICK SERVICES
+        ================================================== -->
+
+        <section class="services">
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    ✈️
+                </div>
+
+                <div>
+
+                    <h3>
+                        Flights
+                    </h3>
+
+                    <p>
+                        Find and compare flights
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    🏨
+                </div>
+
+                <div>
+
+                    <h3>
+                        Hotels
+                    </h3>
+
+                    <p>
+                        Comfortable stays worldwide
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    🚆
+                </div>
+
+                <div>
+
+                    <h3>
+                        Trains
+                    </h3>
+
+                    <p>
+                        Plan your rail journey
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    🚌
+                </div>
+
+                <div>
+
+                    <h3>
+                        Buses
+                    </h3>
+
+                    <p>
+                        Book convenient bus travel
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             DESTINATIONS
+        ================================================== -->
+
+        <section
+            class="section"
+            id="destinations"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span>
+                        EXPLORE
+                    </span>
+
+                    <h2>
+                        Popular Destinations
+                    </h2>
+
+                    <p>
+                        Places travelers are loving right now.
+                    </p>
+
+                </div>
+
+
+                <button class="view-button">
+                    View All →
+                </button>
+
+            </div>
+
+
+            <div class="destination-grid">
+
+
+                <!-- GOA -->
+
+                <article class="destination-card large">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=1200&q=80"
+                        alt="Goa beach"
+                    >
+
+                    <div class="destination-info">
+
+                        <span>
+                            INDIA
+                        </span>
+
+                        <h3>
+                            Goa
+                        </h3>
+
+                        <p>
+                            Beaches • Adventure • Nightlife
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- JAIPUR -->
+
+                <article class="destination-card">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=900&q=80"
+                        alt="Jaipur"
+                    >
+
+                    <div class="destination-info">
+
+                        <span>
+                            INDIA
+                        </span>
+
+                        <h3>
+                            Jaipur
+                        </h3>
+
+                        <p>
+                            Heritage • Culture
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- MANALI -->
+
+                <article class="destination-card">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1518002054494-3a6f94352e9d?auto=format&fit=crop&w=900&q=80"
+                        alt="Mountain destination"
+                    >
+
+                    <div class="destination-info">
+
+                        <span>
+                            INDIA
+                        </span>
+
+                        <h3>
+                            Manali
+                        </h3>
+
+                        <p>
+                            Mountains • Snow
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- DUBAI -->
+
+                <article class="destination-card">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=900&q=80"
+                        alt="Dubai"
+                    >
+
+                    <div class="destination-info">
+
+                        <span>
+                            UAE
+                        </span>
+
+                        <h3>
+                            Dubai
+                        </h3>
+
+                        <p>
+                            Luxury • Shopping
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PARIS -->
+
+                <article class="destination-card">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=900&q=80"
+                        alt="Paris"
+                    >
+
+                    <div class="destination-info">
+
+                        <span>
+                            FRANCE
+                        </span>
+
+                        <h3>
+                            Paris
+                        </h3>
+
+                        <p>
+                            Romance • Culture
+                        </p>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             OFFERS
+        ================================================== -->
+
+        <section
+            class="section offers-section"
+            id="offers"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span>
+                        SPECIAL DEALS
+                    </span>
+
+                    <h2>
+                        Travel Offers
+                    </h2>
+
+                    <p>
+                        Save more on your next adventure.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="offers-grid">
+
+
+                <article class="offer-card">
+
+                    <div>
+
+                        <small>
+                            FLIGHTS
+                        </small>
+
+                        <h3>
+                            Up to 25% OFF
+                        </h3>
+
+                        <p>
+                            Book domestic flights
+                            at amazing prices.
+                        </p>
+
+                        <button>
+                            Explore →
+                        </button>
+
+                    </div>
+
+                    <div class="offer-emoji">
+                        ✈️
+                    </div>
+
+                </article>
+
+
+                <article class="offer-card">
+
+                    <div>
+
+                        <small>
+                            HOTELS
+                        </small>
+
+                        <h3>
+                            Stay from ₹999
+                        </h3>
+
+                        <p>
+                            Find comfortable stays
+                            for less.
+                        </p>
+
+                        <button>
+                            Explore →
+                        </button>
+
+                    </div>
+
+                    <div class="offer-emoji">
+                        🏨
+                    </div>
+
+                </article>
+
+
+                <article class="offer-card">
+
+                    <div>
+
+                        <small>
+                            PACKAGES
+                        </small>
+
+                        <h3>
+                            Weekend Getaways
+                        </h3>
+
+                        <p>
+                            Discover amazing
+                            short trips.
+                        </p>
+
+                        <button>
+                            Explore →
+                        </button>
+
+                    </div>
+
+                    <div class="offer-emoji">
+                        🌴
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             WHY TRAVELGO
+        ================================================== -->
+
+        <section class="why-us">
+
+            <div class="section-heading centered">
+
+                <span>
+                    WHY TRAVELGO
+                </span>
+
+                <h2>
+                    Travel made simple
+                </h2>
+
+                <p>
+                    Everything you need for your journey.
+                </p>
+
+            </div>
+
+
+            <div class="features">
+
+                <div class="feature">
+
+                    <div>
+                        🔐
+                    </div>
+
+                    <h3>
+                        Secure Booking
+                    </h3>
+
+                    <p>
+                        Verify your mobile number
+                        with OTP before booking.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div>
+                        💰
+                    </div>
+
+                    <h3>
+                        Best Prices
+                    </h3>
+
+                    <p>
+                        Find great travel deals
+                        and affordable stays.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div>
+                        ⚡
+                    </div>
+
+                    <h3>
+                        Fast Booking
+                    </h3>
+
+                    <p>
+                        Complete your booking
+                        in just a few steps.
+                    </p>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div>
+                        🎧
+                    </div>
+
+                    <h3>
+                        Travel Support
+                    </h3>
+
+                    <p>
+                        Get help whenever you
+                        need it.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             CALL TO ACTION
+        ================================================== -->
+
+        <section class="cta">
+
+            <div>
+
+                <span>
+                    READY TO TRAVEL?
+                </span>
+
+                <h2>
+                    Your next adventure
+                    is waiting.
+                </h2>
+
+                <p>
+                    Start exploring and make
+                    your next trip unforgettable.
+                </p>
+
+            </div>
+
+
+            <button id="exploreButton">
+                Explore Now →
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-container">
+
+
+            <div class="footer-about">
+
+                <div class="logo footer-logo">
+
+                    <span class="logo-icon">
+                        ✈
+                    </span>
+
+                    <span>
+                        TravelGo
+                    </span>
+
+                </div>
+
+                <p>
+                    Making travel easier,
+                    one journey at a time.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Explore
+                </h4>
+
+                <a href="#destinations">
+                    Destinations
+                </a>
+
+                <a href="#flights">
+                    Flights
+                </a>
+
+                <a href="#hotels">
+                    Hotels
+                </a>
+
+                <a href="#offers">
+                    Offers
+                </a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Support
+                </h4>
+
+                <a href="#">
+                    Help Center
+                </a>
+
+                <a href="#">
+                    Contact Us
+                </a>
+
+                <a href="#">
+                    FAQ
+                </a>
+
+                <a href="#">
+                    Terms
+                </a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>
+                    Account
+                </h4>
+
+                <a href="#">
+                    Login
+                </a>
+
+                <a href="#">
+                    Register
+                </a>
+
+                <a href="#">
+                    My Bookings
+                </a>
+
+                <a href="#">
+                    Profile
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 TravelGo
+            </span>
+
+            <span>
+                HTML • CSS • JavaScript
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         LOGIN MODAL
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="loginModal"
+    >
+
+        <div class="modal-box">
+
+            <button
+                class="close-modal"
+                id="closeLogin"
+            >
+                ×
+            </button>
+
+            <div class="modal-icon">
+                🔐
+            </div>
+
+            <h2>
+                Welcome Back
+            </h2>
+
+            <p>
+                Login to manage your bookings.
+            </p>
+
+
+            <input
+                type="tel"
+                id="loginPhone"
+                placeholder="Enter mobile number"
+                maxlength="10"
+            >
+
+
+            <button
+                class="modal-button"
+                id="sendLoginOtp"
+            >
+                Send OTP
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         SIGNUP MODAL
+    ====================================================== -->
+
+    <div
+        class="modal"
+        id="signupModal"
+    >
+
+        <div class="modal-box">
+
+            <button
+                class="close-modal"
+                id="closeSignup"
+            >
+                ×
+            </button>
+
+            <div class="modal-icon">
+                👤
+            </div>
+
+            <h2>
+                Create Account
+            </h2>
+
+            <p>
+                Start planning your next journey.
+            </p>
+
+
+            <input
+                type="text"
+                id="signupName"
+                placeholder="Full name"
+            >
+
+
+            <input
+                type="tel"
+                id="signupPhone"
+                placeholder="Mobile number"
+                maxlength="10"
+            >
+
+
+            <button
+                class="modal-button"
+                id="sendSignupOtp"
+            >
+                Create Account
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        class="toast"
+        id="toast"
+    >
+        <span>✓</span>
+
+        <p id="toastMessage">
+            Welcome to TravelGo!
+        </p>
+    </div>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="script.js"></script>
+
+</body>
+</html>

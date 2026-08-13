@@ -1,0 +1,2251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TravelGo | Flight Search</title>
+
+    <style>
+
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #111827;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            height: 70px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            background: rgba(255,255,255,.96);
+            border-bottom: 1px solid #e5e7eb;
+
+            backdrop-filter: blur(12px);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: #2563eb;
+
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 12px;
+
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #06b6d4
+            );
+
+            color: white;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            color: #4b5563;
+
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #2563eb;
+        }
+
+        .home-btn {
+            padding: 9px 15px;
+
+            border: none;
+            border-radius: 9px;
+
+            background: #2563eb;
+            color: white;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page {
+            max-width: 1250px;
+
+            margin: auto;
+
+            padding: 55px 6%;
+        }
+
+        .page-top {
+            margin-bottom: 25px;
+        }
+
+        .back {
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+            color: #2563eb;
+
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .page-top span {
+            color: #2563eb;
+
+            font-size: 10px;
+            font-weight: 800;
+
+            letter-spacing: 2px;
+        }
+
+        .page-top h1 {
+            margin-top: 8px;
+
+            font-size: 38px;
+        }
+
+        .page-top p {
+            margin-top: 8px;
+
+            color: #6b7280;
+
+            font-size: 12px;
+        }
+
+
+        /* =========================
+           SEARCH PANEL
+        ========================= */
+
+        .search-panel {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr 1fr 1fr auto;
+
+            gap: 10px;
+
+            padding: 18px;
+
+            margin-bottom: 30px;
+
+            border-radius: 18px;
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0,0,0,.06);
+        }
+
+        .field {
+            padding: 11px;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 9px;
+        }
+
+        .field label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: #6b7280;
+
+            font-size: 8px;
+            font-weight: 800;
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+
+            border: none;
+            outline: none;
+
+            background: transparent;
+
+            color: #111827;
+
+            font-size: 11px;
+        }
+
+        .search-btn {
+            border: none;
+
+            padding: 0 22px;
+
+            border-radius: 9px;
+
+            background: linear-gradient(
+                135deg,
+                #2563eb,
+                #06b6d4
+            );
+
+            color: white;
+
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+
+        /* =========================
+           RESULTS LAYOUT
+        ========================= */
+
+        .results-layout {
+            display: grid;
+
+            grid-template-columns:
+                220px 1fr;
+
+            gap: 20px;
+        }
+
+
+        /* =========================
+           FILTERS
+        ========================= */
+
+        .filters {
+            height: fit-content;
+
+            padding: 20px;
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 16px;
+        }
+
+        .filters h2 {
+            margin-bottom: 20px;
+
+            font-size: 16px;
+        }
+
+        .filter-group {
+            padding-bottom: 18px;
+            margin-bottom: 18px;
+
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .filter-group:last-child {
+            border-bottom: none;
+        }
+
+        .filter-group h3 {
+            margin-bottom: 10px;
+
+            font-size: 11px;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+
+            gap: 8px;
+
+            margin: 9px 0;
+
+            color: #6b7280;
+
+            font-size: 10px;
+        }
+
+
+        /* =========================
+           RESULTS
+        ========================= */
+
+        .results {
+            min-width: 0;
+        }
+
+        .results-header {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 15px;
+        }
+
+        .results-header h2 {
+            font-size: 18px;
+        }
+
+        .sort {
+            padding: 9px;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 8px;
+
+            background: white;
+
+            font-size: 10px;
+        }
+
+
+        /* =========================
+           FLIGHT CARD
+        ========================= */
+
+        .flight-card {
+            display: grid;
+
+            grid-template-columns:
+                1.2fr 1fr 1fr 1fr;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 20px;
+
+            margin-bottom: 12px;
+
+            background: white;
+
+            border: 1px solid #e5e7eb;
+
+            border-radius: 16px;
+
+            transition: .25s;
+        }
+
+        .flight-card:hover {
+            transform: translateY(-3px);
+
+            box-shadow:
+                0 12px 30px
+                rgba(0,0,0,.08);
+        }
+
+
+        /* AIRLINE */
+
+        .airline {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .airline-logo {
+            width: 43px;
+            height: 43px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 11px;
+
+            background: #eff6ff;
+
+            font-size: 20px;
+        }
+
+        .airline strong {
+            display: block;
+
+            font-size: 12px;
+        }
+
+        .airline small {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #6b7280;
+
+            font-size: 8px;
+        }
+
+
+        /* ROUTE */
+
+        .route {
+            text-align: center;
+        }
+
+        .route strong {
+            font-size: 17px;
+        }
+
+        .route span {
+            display: block;
+
+            margin-top: 4px;
+
+            color: #6b7280;
+
+            font-size: 8px;
+        }
+
+
+        /* DURATION */
+
+        .duration {
+            text-align: center;
+        }
+
+        .duration strong {
+            display: block;
+
+            font-size: 11px;
+        }
+
+        .duration span {
+            display: block;
+
+            margin-top: 4px;
+
+            color: #16a34a;
+
+            font-size: 8px;
+        }
+
+
+        /* PRICE */
+
+        .price {
+            text-align: right;
+        }
+
+        .price strong {
+            display: block;
+
+            font-size: 19px;
+        }
+
+        .price small {
+            display: block;
+
+            margin-top: 3px;
+
+            color: #6b7280;
+
+            font-size: 8px;
+        }
+
+        .book-btn {
+            margin-top: 9px;
+
+            padding: 9px 15px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .book-btn:hover {
+            background: #1d4ed8;
+        }
+
+
+        /* =========================
+           MODAL
+        ========================= */
+
+        .modal {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 5000;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: rgba(0,0,0,.65);
+
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            width: min(500px,100%);
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            padding: 28px;
+
+            border-radius: 20px;
+
+            background: white;
+
+            animation: popup .25s ease;
+        }
+
+        @keyframes popup {
+
+            from {
+                opacity: 0;
+                transform: scale(.92);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+        }
+
+        .modal-top {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .modal-top h2 {
+            font-size: 22px;
+        }
+
+        .close-btn {
+            width: 32px;
+            height: 32px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: #f1f5f9;
+
+            font-size: 18px;
+        }
+
+        .selected-flight {
+            padding: 15px;
+
+            margin-bottom: 20px;
+
+            border-radius: 12px;
+
+            background: #eff6ff;
+
+            color: #1e3a8a;
+
+            font-size: 11px;
+        }
+
+        .form-group {
+            margin-bottom: 13px;
+        }
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+
+            height: 44px;
+
+            padding: 0 12px;
+
+            border: 1px solid #dbe1ea;
+
+            border-radius: 9px;
+
+            outline: none;
+
+            font-size: 11px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: #2563eb;
+        }
+
+        .continue-btn {
+            width: 100%;
+
+            height: 45px;
+
+            margin-top: 5px;
+
+            border: none;
+
+            border-radius: 9px;
+
+            background: #2563eb;
+
+            color: white;
+
+            font-size: 11px;
+            font-weight: 800;
+        }
+
+
+        /* =========================
+           OTP
+        ========================= */
+
+        .otp-section {
+            display: none;
+        }
+
+        .otp-section.show {
+            display: block;
+        }
+
+        .otp-message {
+            padding: 14px;
+
+            margin-bottom: 15px;
+
+            border-radius: 10px;
+
+            background: #f0fdf4;
+
+            color: #166534;
+
+            font-size: 10px;
+        }
+
+        .otp-input {
+            letter-spacing: 8px;
+
+            text-align: center;
+
+            font-size: 18px !important;
+            font-weight: 800;
+        }
+
+
+        /* =========================
+           SUCCESS
+        ========================= */
+
+        .success {
+            display: none;
+
+            text-align: center;
+        }
+
+        .success.show {
+            display: block;
+        }
+
+        .success-icon {
+            width: 70px;
+            height: 70px;
+
+            display: grid;
+            place-items: center;
+
+            margin: 0 auto 20px;
+
+            border-radius: 50%;
+
+            background: #dcfce7;
+
+            color: #16a34a;
+
+            font-size: 35px;
+        }
+
+        .success h2 {
+            margin-bottom: 8px;
+        }
+
+        .success p {
+            color: #6b7280;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+        }
+
+        .booking-id {
+            margin: 20px 0;
+
+            padding: 13px;
+
+            border-radius: 10px;
+
+            background: #f1f5f9;
+
+            font-weight: 800;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media(max-width:950px) {
+
+            .search-panel {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .results-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                display: none;
+            }
+
+            .flight-card {
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+            .price {
+                text-align: left;
+            }
+
+        }
+
+
+        @media(max-width:600px) {
+
+            header {
+                padding: 0 20px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .page {
+                padding: 35px 20px;
+            }
+
+            .page-top h1 {
+                font-size: 30px;
+            }
+
+            .search-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .search-btn {
+                height: 45px;
+            }
+
+            .flight-card {
+                grid-template-columns: 1fr;
+            }
+
+            .route,
+            .duration,
+            .price {
+                text-align: left;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<header>
+
+    <a
+        href="index.html"
+        class="logo"
+    >
+
+        <span class="logo-icon">
+            ✈
+        </span>
+
+        TravelGo
+
+    </a>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a
+            href="flight.html"
+            class="active"
+        >
+            Flights
+        </a>
+
+        <a href="hotels.html">
+            Hotels
+        </a>
+
+        <a href="trains.html">
+            Trains
+        </a>
+
+        <a href="buses.html">
+            Buses
+        </a>
+
+    </nav>
+
+
+    <a
+        href="index.html"
+        class="home-btn"
+    >
+        ← Home
+    </a>
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main class="page">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="page-top">
+
+        <a
+            href="index.html"
+            class="back"
+        >
+            ← Back to TravelGo
+        </a>
+
+        <span>
+            FLIGHT BOOKING
+        </span>
+
+        <h1>
+            Find your perfect flight ✈️
+        </h1>
+
+        <p>
+            Compare flights, choose your preferred
+            airline and book your journey.
+        </p>
+
+    </div>
+
+
+
+    <!-- =====================================
+         SEARCH
+    ====================================== -->
+
+    <div class="search-panel">
+
+        <div class="field">
+
+            <label>
+                FROM
+            </label>
+
+            <input
+                type="text"
+                id="fromCity"
+                placeholder="Delhi"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                TO
+            </label>
+
+            <input
+                type="text"
+                id="toCity"
+                placeholder="Mumbai"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                DEPARTURE
+            </label>
+
+            <input
+                type="date"
+                id="departureDate"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                TRAVELERS
+            </label>
+
+            <select id="travelerCount">
+
+                <option value="1">
+                    1 Traveler
+                </option>
+
+                <option value="2">
+                    2 Travelers
+                </option>
+
+                <option value="3">
+                    3 Travelers
+                </option>
+
+                <option value="4">
+                    4 Travelers
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <button
+            class="search-btn"
+            onclick="searchFlights()"
+        >
+            Search
+        </button>
+
+    </div>
+
+
+
+    <!-- =====================================
+         RESULTS
+    ====================================== -->
+
+    <div class="results-layout">
+
+
+        <!-- FILTERS -->
+
+        <aside class="filters">
+
+            <h2>
+                Filters
+            </h2>
+
+
+            <div class="filter-group">
+
+                <h3>
+                    Stops
+                </h3>
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        class="filter"
+                    >
+
+                    Non-stop
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        class="filter"
+                    >
+
+                    1 Stop
+
+                </label>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <h3>
+                    Airlines
+                </h3>
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        class="filter"
+                    >
+
+                    IndiGo
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        class="filter"
+                    >
+
+                    Air India
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        class="filter"
+                    >
+
+                    Vistara
+
+                </label>
+
+            </div>
+
+
+            <div class="filter-group">
+
+                <h3>
+                    Departure Time
+                </h3>
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        class="filter"
+                    >
+
+                    Morning
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        class="filter"
+                    >
+
+                    Afternoon
+
+                </label>
+
+
+                <label class="filter-option">
+
+                    <input
+                        type="checkbox"
+                        class="filter"
+                    >
+
+                    Evening
+
+                </label>
+
+            </div>
+
+        </aside>
+
+
+
+        <!-- RESULTS -->
+
+        <section class="results">
+
+
+            <div class="results-header">
+
+                <h2>
+                    Available Flights
+                </h2>
+
+
+                <select
+                    class="sort"
+                    id="sortFlights"
+                    onchange="sortFlights()"
+                >
+
+                    <option value="recommended">
+                        Recommended
+                    </option>
+
+                    <option value="price">
+                        Cheapest
+                    </option>
+
+                    <option value="duration">
+                        Fastest
+                    </option>
+
+                </select>
+
+            </div>
+
+
+
+            <!-- FLIGHT 1 -->
+
+            <article
+                class="flight-card"
+                data-price="4299"
+                data-duration="130"
+            >
+
+                <div class="airline">
+
+                    <div class="airline-logo">
+                        ✈️
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            IndiGo
+                        </strong>
+
+                        <small>
+                            6E 204
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="route">
+
+                    <strong>
+                        06:30
+                    </strong>
+
+                    <span>
+                        Delhi → Mumbai
+                    </span>
+
+                </div>
+
+
+                <div class="duration">
+
+                    <strong>
+                        2h 10m
+                    </strong>
+
+                    <span>
+                        Non-stop
+                    </span>
+
+                </div>
+
+
+                <div class="price">
+
+                    <strong>
+                        ₹4,299
+                    </strong>
+
+                    <small>
+                        per traveler
+                    </small>
+
+                    <button
+                        class="book-btn"
+                        onclick="openBooking(
+                            'IndiGo',
+                            '6E 204',
+                            '06:30',
+                            '08:40',
+                            '₹4,299'
+                        )"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- FLIGHT 2 -->
+
+            <article
+                class="flight-card"
+                data-price="4850"
+                data-duration="135"
+            >
+
+                <div class="airline">
+
+                    <div class="airline-logo">
+                        ✈️
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Air India
+                        </strong>
+
+                        <small>
+                            AI 864
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="route">
+
+                    <strong>
+                        09:15
+                    </strong>
+
+                    <span>
+                        Delhi → Mumbai
+                    </span>
+
+                </div>
+
+
+                <div class="duration">
+
+                    <strong>
+                        2h 15m
+                    </strong>
+
+                    <span>
+                        Non-stop
+                    </span>
+
+                </div>
+
+
+                <div class="price">
+
+                    <strong>
+                        ₹4,850
+                    </strong>
+
+                    <small>
+                        per traveler
+                    </small>
+
+                    <button
+                        class="book-btn"
+                        onclick="openBooking(
+                            'Air India',
+                            'AI 864',
+                            '09:15',
+                            '11:30',
+                            '₹4,850'
+                        )"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- FLIGHT 3 -->
+
+            <article
+                class="flight-card"
+                data-price="5120"
+                data-duration="125"
+            >
+
+                <div class="airline">
+
+                    <div class="airline-logo">
+                        ✈️
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            Vistara
+                        </strong>
+
+                        <small>
+                            UK 955
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="route">
+
+                    <strong>
+                        14:20
+                    </strong>
+
+                    <span>
+                        Delhi → Mumbai
+                    </span>
+
+                </div>
+
+
+                <div class="duration">
+
+                    <strong>
+                        2h 05m
+                    </strong>
+
+                    <span>
+                        Non-stop
+                    </span>
+
+                </div>
+
+
+                <div class="price">
+
+                    <strong>
+                        ₹5,120
+                    </strong>
+
+                    <small>
+                        per traveler
+                    </small>
+
+                    <button
+                        class="book-btn"
+                        onclick="openBooking(
+                            'Vistara',
+                            'UK 955',
+                            '14:20',
+                            '16:25',
+                            '₹5,120'
+                        )"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- FLIGHT 4 -->
+
+            <article
+                class="flight-card"
+                data-price="4590"
+                data-duration="140"
+            >
+
+                <div class="airline">
+
+                    <div class="airline-logo">
+                        ✈️
+                    </div>
+
+                    <div>
+
+                        <strong>
+                            IndiGo
+                        </strong>
+
+                        <small>
+                            6E 531
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="route">
+
+                    <strong>
+                        18:45
+                    </strong>
+
+                    <span>
+                        Delhi → Mumbai
+                    </span>
+
+                </div>
+
+
+                <div class="duration">
+
+                    <strong>
+                        2h 20m
+                    </strong>
+
+                    <span>
+                        Non-stop
+                    </span>
+
+                </div>
+
+
+                <div class="price">
+
+                    <strong>
+                        ₹4,590
+                    </strong>
+
+                    <small>
+                        per traveler
+                    </small>
+
+                    <button
+                        class="book-btn"
+                        onclick="openBooking(
+                            'IndiGo',
+                            '6E 531',
+                            '18:45',
+                            '21:05',
+                            '₹4,590'
+                        )"
+                    >
+                        Book Now
+                    </button>
+
+                </div>
+
+            </article>
+
+        </section>
+
+    </div>
+
+</main>
+
+
+
+<!-- =========================================
+     BOOKING MODAL
+========================================= -->
+
+<div
+    class="modal"
+    id="bookingModal"
+>
+
+    <div class="modal-box">
+
+
+        <!-- BOOKING FORM -->
+
+        <div id="bookingForm">
+
+            <div class="modal-top">
+
+                <h2>
+                    Passenger Details
+                </h2>
+
+                <button
+                    class="close-btn"
+                    onclick="closeBooking()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div
+                class="selected-flight"
+                id="selectedFlight"
+            >
+                Flight details
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    FULL NAME
+                </label>
+
+                <input
+                    type="text"
+                    id="passengerName"
+                    placeholder="Enter passenger name"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    MOBILE NUMBER
+                </label>
+
+                <input
+                    type="tel"
+                    id="passengerPhone"
+                    maxlength="10"
+                    placeholder="10-digit mobile number"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    EMAIL
+                </label>
+
+                <input
+                    type="email"
+                    id="passengerEmail"
+                    placeholder="example@email.com"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    TRAVELERS
+                </label>
+
+                <select id="bookingTravelers">
+
+                    <option value="1">
+                        1 Traveler
+                    </option>
+
+                    <option value="2">
+                        2 Travelers
+                    </option>
+
+                    <option value="3">
+                        3 Travelers
+                    </option>
+
+                    <option value="4">
+                        4 Travelers
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                class="continue-btn"
+                onclick="sendBookingOTP()"
+            >
+                Continue & Send OTP
+            </button>
+
+        </div>
+
+
+
+        <!-- OTP -->
+
+        <div
+            class="otp-section"
+            id="otpSection"
+        >
+
+            <div class="modal-top">
+
+                <h2>
+                    Verify Mobile
+                </h2>
+
+                <button
+                    class="close-btn"
+                    onclick="closeBooking()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="otp-message">
+
+                🔐 Demo OTP sent to your mobile number.
+                Enter <strong>123456</strong> to continue.
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>
+                    ENTER OTP
+                </label>
+
+                <input
+                    type="text"
+                    id="otpInput"
+                    class="otp-input"
+                    maxlength="6"
+                    placeholder="••••••"
+                >
+
+            </div>
+
+
+            <button
+                class="continue-btn"
+                onclick="verifyOTP()"
+            >
+                Verify & Confirm Booking
+            </button>
+
+        </div>
+
+
+
+        <!-- SUCCESS -->
+
+        <div
+            class="success"
+            id="successSection"
+        >
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>
+                Booking Confirmed!
+            </h2>
+
+            <p>
+                Your flight booking has been
+                successfully created.
+            </p>
+
+
+            <div class="booking-id">
+
+                Booking ID:
+                <span id="bookingId">
+                    TG000000
+                </span>
+
+            </div>
+
+
+            <button
+                class="continue-btn"
+                onclick="closeBooking()"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+    /* =====================================
+       DATE
+    ===================================== */
+
+    const today = new Date();
+
+    const dateString =
+        today.getFullYear() +
+        "-" +
+        String(
+            today.getMonth() + 1
+        ).padStart(2, "0") +
+        "-" +
+        String(
+            today.getDate()
+        ).padStart(2, "0");
+
+
+    document
+        .getElementById("departureDate")
+        .min = dateString;
+
+
+
+    /* =====================================
+       SEARCH FLIGHTS
+    ===================================== */
+
+    function searchFlights() {
+
+        const from =
+            document
+            .getElementById("fromCity")
+            .value
+            .trim();
+
+        const to =
+            document
+            .getElementById("toCity")
+            .value
+            .trim();
+
+        const date =
+            document
+            .getElementById("departureDate")
+            .value;
+
+
+        if (!from) {
+
+            alert(
+                "Please enter your departure city."
+            );
+
+            return;
+        }
+
+
+        if (!to) {
+
+            alert(
+                "Please enter your destination."
+            );
+
+            return;
+        }
+
+
+        if (!date) {
+
+            alert(
+                "Please select your departure date."
+            );
+
+            return;
+        }
+
+
+        document
+            .querySelectorAll(".route span")
+            .forEach(route => {
+
+                route.textContent =
+                    `${from} → ${to}`;
+
+            });
+
+
+        alert(
+            `Searching flights from ${from} to ${to}`
+        );
+
+    }
+
+
+
+    /* =====================================
+       SORT FLIGHTS
+    ===================================== */
+
+    function sortFlights() {
+
+        const sortValue =
+            document
+            .getElementById("sortFlights")
+            .value;
+
+        const results =
+            document.querySelector(".results");
+
+        const cards =
+            Array.from(
+                document.querySelectorAll(
+                    ".flight-card"
+                )
+            );
+
+
+        if (sortValue === "price") {
+
+            cards.sort(
+                (a,b) =>
+                    Number(a.dataset.price) -
+                    Number(b.dataset.price)
+            );
+
+        }
+
+
+        if (sortValue === "duration") {
+
+            cards.sort(
+                (a,b) =>
+                    Number(a.dataset.duration) -
+                    Number(b.dataset.duration)
+            );
+
+        }
+
+
+        cards.forEach(card => {
+
+            results.appendChild(card);
+
+        });
+
+    }
+
+
+
+    /* =====================================
+       BOOKING DATA
+    ===================================== */
+
+    let selectedFlight = {};
+
+
+
+    /* =====================================
+       OPEN BOOKING
+    ===================================== */
+
+    function openBooking(
+        airline,
+        flightNumber,
+        departure,
+        arrival,
+        price
+    ) {
+
+        selectedFlight = {
+
+            airline,
+            flightNumber,
+            departure,
+            arrival,
+            price
+
+        };
+
+
+        document
+            .getElementById("selectedFlight")
+            .innerHTML = `
+
+                <strong>
+                    ${airline} ${flightNumber}
+                </strong>
+
+                <br>
+
+                ${departure} → ${arrival}
+
+                <br>
+
+                Price:
+                <strong>
+                    ${price}
+                </strong>
+
+            `;
+
+
+        document
+            .getElementById("bookingModal")
+            .classList.add("show");
+
+
+        document
+            .getElementById("bookingForm")
+            .style.display = "block";
+
+
+        document
+            .getElementById("otpSection")
+            .classList.remove("show");
+
+
+        document
+            .getElementById("successSection")
+            .classList.remove("show");
+
+    }
+
+
+
+    /* =====================================
+       CLOSE BOOKING
+    ===================================== */
+
+    function closeBooking() {
+
+        document
+            .getElementById("bookingModal")
+            .classList.remove("show");
+
+    }
+
+
+
+    /* =====================================
+       SEND OTP
+    ===================================== */
+
+    function sendBookingOTP() {
+
+        const name =
+            document
+            .getElementById("passengerName")
+            .value
+            .trim();
+
+        const phone =
+            document
+            .getElementById("passengerPhone")
+            .value
+            .trim();
+
+        const email =
+            document
+            .getElementById("passengerEmail")
+            .value
+            .trim();
+
+
+        if (!name) {
+
+            alert(
+                "Please enter passenger name."
+            );
+
+            return;
+        }
+
+
+        if (
+            !/^[6-9]\d{9}$/.test(phone)
+        ) {
+
+            alert(
+                "Please enter a valid 10-digit Indian mobile number."
+            );
+
+            return;
+        }
+
+
+        if (
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            .test(email)
+        ) {
+
+            alert(
+                "Please enter a valid email."
+            );
+
+            return;
+        }
+
+
+        selectedFlight.name = name;
+        selectedFlight.phone = phone;
+        selectedFlight.email = email;
+
+
+        document
+            .getElementById("bookingForm")
+            .style.display = "none";
+
+
+        document
+            .getElementById("otpSection")
+            .classList.add("show");
+
+
+        /*
+            DEMO ONLY
+
+            Real SMS OTP requires
+            a backend + OTP provider.
+        */
+
+        console.log(
+            "Demo OTP: 123456"
+        );
+
+    }
+
+
+
+    /* =====================================
+       VERIFY OTP
+    ===================================== */
+
+    function verifyOTP() {
+
+        const otp =
+            document
+            .getElementById("otpInput")
+            .value
+            .trim();
+
+
+        if (otp !== "123456") {
+
+            alert(
+                "Invalid OTP. For this demo use 123456."
+            );
+
+            return;
+        }
+
+
+        const id =
+            "TG" +
+            Math.floor(
+                100000 +
+                Math.random() * 900000
+            );
+
+
+        document
+            .getElementById("bookingId")
+            .textContent = id;
+
+
+        document
+            .getElementById("otpSection")
+            .classList.remove("show");
+
+
+        document
+            .getElementById("successSection")
+            .classList.add("show");
+
+
+        console.log(
+            "Booking confirmed:",
+            selectedFlight
+        );
+
+    }
+
+
+
+    /* =====================================
+       PHONE INPUT
+    ===================================== */
+
+    document
+        .getElementById("passengerPhone")
+        .addEventListener(
+            "input",
+            function() {
+
+                this.value =
+                    this.value.replace(
+                        /\D/g,
+                        ""
+                    );
+
+            }
+        );
+
+
+
+    /* =====================================
+       OTP INPUT
+    ===================================== */
+
+    document
+        .getElementById("otpInput")
+        .addEventListener(
+            "input",
+            function() {
+
+                this.value =
+                    this.value.replace(
+                        /\D/g,
+                        ""
+                    );
+
+            }
+        );
+
+
+
+    /* =====================================
+       CLOSE MODAL OUTSIDE
+    ===================================== */
+
+    document
+        .getElementById("bookingModal")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target === this
+                ) {
+
+                    closeBooking();
+
+                }
+
+            }
+        );
+
+
+
+    /* =====================================
+       ESC KEY
+    ===================================== */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                closeBooking();
+
+            }
+
+        }
+    );
+
+</script>
+
+</body>
+</html>

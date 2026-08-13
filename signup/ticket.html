@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TravelGo | Ticket</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#eef2f7;
+    color:#111827;
+}
+
+header{
+    height:70px;
+    padding:0 6%;
+    background:white;
+    border-bottom:1px solid #e5e7eb;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    color:#2563eb;
+    font-size:22px;
+    font-weight:800;
+    text-decoration:none;
+}
+
+.logo-icon{
+    width:40px;
+    height:40px;
+
+    display:grid;
+    place-items:center;
+
+    border-radius:12px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #06b6d4
+    );
+
+    color:white;
+}
+
+.dashboard-link{
+    padding:10px 15px;
+
+    border-radius:8px;
+
+    background:#eff6ff;
+    color:#2563eb;
+
+    text-decoration:none;
+
+    font-size:10px;
+    font-weight:800;
+}
+
+.container{
+    max-width:800px;
+    margin:45px auto;
+    padding:0 20px;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:25px;
+}
+
+.title span{
+    color:#2563eb;
+
+    font-size:9px;
+    font-weight:800;
+
+    letter-spacing:2px;
+}
+
+.title h1{
+    margin-top:8px;
+    font-size:30px;
+}
+
+.title p{
+    margin-top:8px;
+
+    color:#6b7280;
+    font-size:11px;
+}
+
+/* TICKET */
+
+.ticket{
+    overflow:hidden;
+
+    background:white;
+
+    border-radius:20px;
+
+    box-shadow:0 15px 45px rgba(0,0,0,.08);
+}
+
+.ticket-header{
+    padding:22px 25px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #06b6d4
+    );
+
+    color:white;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.ticket-header h2{
+    font-size:18px;
+}
+
+.confirmed{
+    padding:7px 10px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.2);
+
+    font-size:9px;
+    font-weight:800;
+}
+
+.ticket-body{
+    padding:30px;
+}
+
+.route{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    gap:20px;
+
+    padding-bottom:25px;
+
+    border-bottom:1px dashed #cbd5e1;
+}
+
+.city{
+    text-align:center;
+}
+
+.city strong{
+    display:block;
+    font-size:28px;
+}
+
+.city span{
+    display:block;
+
+    margin-top:5px;
+
+    color:#6b7280;
+    font-size:10px;
+}
+
+.route-line{
+    flex:1;
+
+    height:2px;
+
+    background:#dbeafe;
+
+    position:relative;
+}
+
+.route-line::before{
+    content:"🚌";
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    padding:8px;
+
+    background:white;
+
+    font-size:18px;
+}
+
+.details{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:18px;
+
+    padding:25px 0;
+
+    border-bottom:1px dashed #cbd5e1;
+}
+
+.detail label{
+    display:block;
+
+    margin-bottom:6px;
+
+    color:#94a3b8;
+
+    font-size:8px;
+    font-weight:800;
+
+    letter-spacing:.5px;
+}
+
+.detail strong{
+    font-size:11px;
+}
+
+.passenger{
+    padding:25px 0;
+
+    border-bottom:1px dashed #cbd5e1;
+}
+
+.passenger h3{
+    margin-bottom:15px;
+
+    font-size:14px;
+}
+
+.passenger-grid{
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:18px;
+}
+
+.price-section{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding-top:25px;
+}
+
+.price-section span{
+    color:#64748b;
+
+    font-size:10px;
+}
+
+.price{
+    color:#111827;
+
+    font-size:24px;
+    font-weight:800;
+}
+
+/* BOOKING ID */
+
+.booking-id{
+    margin-top:20px;
+    padding:15px;
+
+    border-radius:10px;
+
+    background:#f8fafc;
+
+    text-align:center;
+}
+
+.booking-id span{
+    display:block;
+
+    margin-top:5px;
+
+    color:#2563eb;
+
+    font-size:14px;
+    font-weight:800;
+
+    letter-spacing:1px;
+}
+
+/* ACTIONS */
+
+.actions{
+    display:flex;
+    gap:10px;
+
+    margin-top:20px;
+}
+
+.action{
+    flex:1;
+
+    height:45px;
+
+    border:0;
+    border-radius:9px;
+
+    font-size:10px;
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+.print{
+    background:#2563eb;
+    color:white;
+}
+
+.back{
+    background:#e0f2fe;
+    color:#0369a1;
+}
+
+.cancel{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+/* EMPTY */
+
+.empty{
+    padding:50px 20px;
+
+    text-align:center;
+
+    background:white;
+
+    border-radius:20px;
+}
+
+.empty-icon{
+    font-size:45px;
+    margin-bottom:15px;
+}
+
+.empty h2{
+    font-size:20px;
+}
+
+.empty p{
+    margin:10px 0 20px;
+
+    color:#6b7280;
+    font-size:11px;
+}
+
+.empty a{
+    display:inline-block;
+
+    padding:12px 20px;
+
+    border-radius:8px;
+
+    background:#2563eb;
+    color:white;
+
+    text-decoration:none;
+
+    font-size:10px;
+    font-weight:800;
+}
+
+/* PRINT */
+
+@media print{
+
+    header,
+    .title,
+    .actions{
+        display:none !important;
+    }
+
+    body{
+        background:white;
+    }
+
+    .container{
+        max-width:100%;
+        margin:0;
+    }
+
+    .ticket{
+        box-shadow:none;
+    }
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .ticket-body{
+        padding:20px;
+    }
+
+    .route{
+        gap:10px;
+    }
+
+    .city strong{
+        font-size:22px;
+    }
+
+    .details,
+    .passenger-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .actions{
+        flex-direction:column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <a
+        href="index.html"
+        class="logo"
+    >
+
+        <span class="logo-icon">
+            🚌
+        </span>
+
+        TravelGo
+
+    </a>
+
+
+    <a
+        href="dashboard.html"
+        class="dashboard-link"
+    >
+        Dashboard
+    </a>
+
+</header>
+
+
+<main class="container">
+
+    <div class="title">
+
+        <span>
+            TRAVELGO TICKET
+        </span>
+
+        <h1>
+            Your Booking 🎫
+        </h1>
+
+        <p>
+            Keep this ticket for your journey.
+        </p>
+
+    </div>
+
+
+    <!-- TICKET -->
+
+    <div
+        id="ticketContainer"
+    ></div>
+
+</main>
+
+
+<script>
+
+function getBookings(){
+
+    return JSON.parse(
+        localStorage.getItem(
+            "travelGoBookings"
+        )
+    ) || [];
+
+}
+
+
+function loadTicket(){
+
+    const bookings =
+        getBookings();
+
+
+    const container =
+        document.getElementById(
+            "ticketContainer"
+        );
+
+
+    if(bookings.length === 0){
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🎫
+                </div>
+
+                <h2>
+                    No Ticket Found
+                </h2>
+
+                <p>
+                    You haven't made a booking yet.
+                </p>
+
+                <a href="buses.html">
+                    Book a Bus
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    /*
+       Get the latest booking.
+    */
+
+    const booking =
+        bookings[0];
+
+
+    container.innerHTML = `
+
+        <div class="ticket">
+
+            <div class="ticket-header">
+
+                <h2>
+                    TravelGo Bus Ticket
+                </h2>
+
+                <span class="confirmed">
+                    ✓ ${booking.status}
+                </span>
+
+            </div>
+
+
+            <div class="ticket-body">
+
+
+                <!-- ROUTE -->
+
+                <div class="route">
+
+                    <div class="city">
+
+                        <strong>
+                            ${booking.departure}
+                        </strong>
+
+                        <span>
+                            ${booking.from}
+                        </span>
+
+                    </div>
+
+
+                    <div class="route-line"></div>
+
+
+                    <div class="city">
+
+                        <strong>
+                            ${booking.arrival}
+                        </strong>
+
+                        <span>
+                            ${booking.to}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DETAILS -->
+
+                <div class="details">
+
+                    <div class="detail">
+
+                        <label>
+                            BUS
+                        </label>
+
+                        <strong>
+                            ${booking.name}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <label>
+                            BUS TYPE
+                        </label>
+
+                        <strong>
+                            ${booking.busType}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <label>
+                            JOURNEY DATE
+                        </label>
+
+                        <strong>
+                            ${formatDate(booking.date)}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail">
+
+                        <label>
+                            SEAT
+                        </label>
+
+                        <strong>
+                            ${booking.seat}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PASSENGER -->
+
+                <div class="passenger">
+
+                    <h3>
+                        Passenger Details
+                    </h3>
+
+
+                    <div class="passenger-grid">
+
+                        <div class="detail">
+
+                            <label>
+                                PASSENGER
+                            </label>
+
+                            <strong>
+                                ${booking.passenger}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <label>
+                                MOBILE
+                            </label>
+
+                            <strong>
+                                ${booking.phone}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <label>
+                                EMAIL
+                            </label>
+
+                            <strong>
+                                ${booking.email}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="detail">
+
+                            <label>
+                                BOOKING ID
+                            </label>
+
+                            <strong>
+                                ${booking.id}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PRICE -->
+
+                <div class="price-section">
+
+                    <span>
+                        Total Fare
+                    </span>
+
+                    <div class="price">
+                        ₹${booking.price}
+                    </div>
+
+                </div>
+
+
+                <!-- BOOKING ID -->
+
+                <div class="booking-id">
+
+                    Booking Reference
+
+                    <span>
+                        ${booking.id}
+                    </span>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="actions">
+
+                    <button
+                        class="action print"
+                        onclick="printTicket()"
+                    >
+                        🖨️ Print Ticket
+                    </button>
+
+
+                    <button
+                        class="action back"
+                        onclick="
+                            location.href='dashboard.html'
+                        "
+                    >
+                        🏠 Dashboard
+                    </button>
+
+
+                    <button
+                        class="action cancel"
+                        onclick="cancelBooking()"
+                    >
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* FORMAT DATE */
+
+function formatDate(date){
+
+    if(!date){
+        return "Not specified";
+    }
+
+
+    const d =
+        new Date(date);
+
+
+    return d.toLocaleDateString(
+        "en-IN",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* PRINT */
+
+function printTicket(){
+
+    window.print();
+
+}
+
+
+/* CANCEL */
+
+function cancelBooking(){
+
+    const confirmCancel =
+        confirm(
+            "Are you sure you want to cancel this booking?"
+        );
+
+
+    if(!confirmCancel){
+        return;
+    }
+
+
+    let bookings =
+        getBookings();
+
+
+    if(bookings.length === 0){
+        return;
+    }
+
+
+    /*
+       Mark the latest booking
+       as cancelled.
+    */
+
+    bookings[0].status =
+        "Cancelled";
+
+
+    localStorage.setItem(
+        "travelGoBookings",
+        JSON.stringify(bookings)
+    );
+
+
+    alert(
+        "Booking cancelled successfully."
+    );
+
+
+    loadTicket();
+
+}
+
+
+/* LOAD */
+
+loadTicket();
+
+</script>
+
+</body>
+</html>
