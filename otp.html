@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TravelGo | OTP Verification</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            font-family: Arial, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
+        }
+
+        .otp-card {
+            width: 100%;
+            max-width: 420px;
+
+            padding: 35px;
+
+            background: white;
+
+            border-radius: 24px;
+
+            text-align: center;
+
+            box-shadow:
+                0 25px 60px
+                rgba(0,0,0,.2);
+        }
+
+        .icon {
+            width: 65px;
+            height: 65px;
+
+            margin: 0 auto 20px;
+
+            display: grid;
+            place-items: center;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            font-size: 30px;
+        }
+
+        h1 {
+            color: #111827;
+            font-size: 25px;
+        }
+
+        .description {
+            margin-top: 10px;
+
+            color: #64748b;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+        }
+
+        .phone {
+            margin-top: 5px;
+
+            color: #2563eb;
+
+            font-weight: 700;
+        }
+
+        .otp-input {
+            width: 100%;
+
+            margin-top: 25px;
+
+            padding: 15px;
+
+            border: 1px solid #dbe3ee;
+
+            border-radius: 12px;
+
+            outline: none;
+
+            text-align: center;
+
+            font-size: 24px;
+
+            font-weight: 700;
+
+            letter-spacing: 10px;
+        }
+
+        .otp-input:focus {
+            border-color: #2563eb;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(37,99,235,.1);
+        }
+
+        .verify-button {
+            width: 100%;
+
+            margin-top: 18px;
+
+            padding: 14px;
+
+            border: 0;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #06b6d4
+                );
+
+            color: white;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .verify-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .resend {
+            margin-top: 20px;
+
+            color: #64748b;
+
+            font-size: 12px;
+        }
+
+        .resend button {
+            border: 0;
+
+            background: none;
+
+            color: #2563eb;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .message {
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            font-size: 12px;
+
+            font-weight: 600;
+        }
+
+        .message.show {
+            display: block;
+        }
+
+        .message.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .message.success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .demo-code {
+            margin-top: 18px;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            background: #f1f5f9;
+
+            color: #475569;
+
+            font-size: 11px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="otp-card">
+
+        <div class="icon">
+            🔐
+        </div>
+
+        <h1>
+            Verify Your Number
+        </h1>
+
+        <p class="description">
+            Enter the 6-digit OTP sent to
+        </p>
+
+        <p
+            class="phone"
+            id="phoneNumber"
+        >
+            **********
+        </p>
+
+
+        <input
+            type="text"
+            id="otpInput"
+            class="otp-input"
+            placeholder="000000"
+            maxlength="6"
+            inputmode="numeric"
+            autocomplete="one-time-code"
+        >
+
+
+        <button
+            class="verify-button"
+            id="verifyButton"
+        >
+            Verify OTP
+        </button>
+
+
+        <div
+            class="message"
+            id="message"
+        ></div>
+
+
+        <div class="resend">
+
+            Didn't receive the code?
+
+            <button id="resendButton">
+                Resend OTP
+            </button>
+
+        </div>
+
+
+        <!-- Demo only -->
+
+        <div class="demo-code">
+
+            Demo OTP:
+            <strong id="demoOtp">
+                ------
+            </strong>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        // =====================================
+        // GET PHONE NUMBER
+        // =====================================
+
+        const user =
+            JSON.parse(
+                localStorage.getItem("travelgoUser")
+            );
+
+
+        const phoneNumber =
+            document.getElementById("phoneNumber");
+
+        const otpInput =
+            document.getElementById("otpInput");
+
+        const verifyButton =
+            document.getElementById("verifyButton");
+
+        const resendButton =
+            document.getElementById("resendButton");
+
+        const message =
+            document.getElementById("message");
+
+        const demoOtp =
+            document.getElementById("demoOtp");
+
+
+        if (!user) {
+
+            window.location.href =
+                "auth.html";
+
+        } else {
+
+            phoneNumber.textContent =
+                maskPhone(user.phone);
+
+        }
+
+
+        // =====================================
+        // GENERATE OTP
+        // =====================================
+
+        function generateOTP() {
+
+            return Math.floor(
+                100000 +
+                Math.random() * 900000
+            ).toString();
+
+        }
+
+
+        // =====================================
+        // SEND / CREATE OTP
+        // =====================================
+
+        function sendOTP() {
+
+            const otp =
+                generateOTP();
+
+
+            sessionStorage.setItem(
+                "travelgoOTP",
+                otp
+            );
+
+
+            demoOtp.textContent =
+                otp;
+
+
+            showMessage(
+                "OTP generated successfully.",
+                "success"
+            );
+
+        }
+
+
+        // =====================================
+        // VERIFY OTP
+        // =====================================
+
+        verifyButton.addEventListener(
+            "click",
+            function() {
+
+                const enteredOTP =
+                    otpInput.value.trim();
+
+                const savedOTP =
+                    sessionStorage.getItem(
+                        "travelgoOTP"
+                    );
+
+
+                if (!/^[0-9]{6}$/.test(enteredOTP)) {
+
+                    showMessage(
+                        "Please enter a 6-digit OTP.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                if (enteredOTP !== savedOTP) {
+
+                    showMessage(
+                        "Incorrect OTP. Try again.",
+                        "error"
+                    );
+
+                    return;
+
+                }
+
+
+                // OTP verified
+
+                localStorage.setItem(
+                    "travelgoVerified",
+                    "true"
+                );
+
+
+                localStorage.setItem(
+                    "travelgoLoggedIn",
+                    "true"
+                );
+
+
+                sessionStorage.removeItem(
+                    "travelgoOTP"
+                );
+
+
+                showMessage(
+                    "OTP verified successfully! 🎉",
+                    "success"
+                );
+
+
+                setTimeout(function() {
+
+                    window.location.href =
+                        "index.html";
+
+                }, 1000);
+
+            }
+        );
+
+
+        // =====================================
+        // RESEND OTP
+        // =====================================
+
+        resendButton.addEventListener(
+            "click",
+            function() {
+
+                sendOTP();
+
+                otpInput.value = "";
+
+            }
+        );
+
+
+        // =====================================
+        // MASK PHONE
+        // =====================================
+
+        function maskPhone(phone) {
+
+            return (
+                phone.substring(0, 2) +
+                "******" +
+                phone.substring(8)
+            );
+
+        }
+
+
+        // =====================================
+        // MESSAGE
+        // =====================================
+
+        function showMessage(
+            text,
+            type
+        ) {
+
+            message.textContent =
+                text;
+
+            message.className =
+                "message show " + type;
+
+        }
+
+
+        // =====================================
+        // INITIAL OTP
+        // =====================================
+
+        sendOTP();
+
+    </script>
+
+</body>
+</html>
