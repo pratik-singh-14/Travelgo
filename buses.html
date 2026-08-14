@@ -939,7 +939,7 @@ nav a.active{
         <a href="buses.html" class="active">
             Buses
         </a>
-
+<a href="offer.html">Offers</a>
     </nav>
 
    <a
@@ -2089,7 +2089,71 @@ nav a.active{
 
             </div>
 
+<div class="form-group">
+    <label>OFFER CODE</label>
 
+    <div style="display:flex; gap:8px;">
+
+        <input
+            type="text"
+            id="offerCode"
+            placeholder="Enter offer code"
+            style="text-transform:uppercase;"
+        >
+
+        <button
+            type="button"
+            onclick="applyOffer()"
+            style="
+                padding:0 15px;
+                border:0;
+                border-radius:9px;
+                background:#2563eb;
+                color:white;
+                font-size:10px;
+                font-weight:800;
+            "
+        >
+            Apply
+        </button>
+
+    </div>
+
+    <p
+        id="offerMessage"
+        style="
+            margin-top:7px;
+            font-size:9px;
+        "
+    ></p>
+</div>
+
+<div
+    id="fareSummary"
+    style="
+        padding:14px;
+        margin-bottom:15px;
+        border-radius:10px;
+        background:#f1f5f9;
+        font-size:10px;
+        line-height:1.8;
+    "
+>
+    Original Fare:
+    <strong id="originalFare">₹0</strong>
+
+    <br>
+
+    Discount:
+    <strong id="discountAmount">₹0</strong>
+
+    <br>
+
+    <strong>
+        Final Fare:
+        <span id="finalFare">₹0</span>
+    </strong>
+</div>
             <button
                 class="continue-btn"
                 onclick="sendOTP()"
@@ -2246,7 +2310,127 @@ document.getElementById("journeyDate").min =
 let selectedBus = {};
 let selectedSeat = null;
 
+let appliedOffer = null;
+let discountAmount = 0;
+let finalFare = 0;
 
+function applyOffer(){
+
+    const input =
+        document.getElementById("offerCode");
+
+    const message =
+        document.getElementById("offerMessage");
+
+    const code =
+        input.value.trim().toUpperCase();
+
+    const fare =
+        Number(selectedBus.price);
+
+    discountAmount = 0;
+    appliedOffer = null;
+
+    if(!code){
+
+        message.textContent =
+            "Please enter an offer code.";
+
+        message.style.color =
+            "#dc2626";
+
+        updateFare(fare);
+
+        return;
+    }
+
+
+    const offers = {
+
+        "FIRSTBUS200": {
+            discount:200,
+            type:"flat"
+        },
+
+        "BUS100": {
+            discount:100,
+            type:"flat"
+        },
+
+        "TRAIN150": {
+            discount:150,
+            type:"flat"
+        }
+
+    };
+
+
+    if(!offers[code]){
+
+        message.textContent =
+            "Invalid offer code.";
+
+        message.style.color =
+            "#dc2626";
+
+        updateFare(fare);
+
+        return;
+    }
+
+
+    const offer =
+        offers[code];
+
+
+    discountAmount =
+        Math.min(
+            offer.discount,
+            fare
+        );
+
+
+    appliedOffer = code;
+
+
+    message.textContent =
+        "✓ Offer applied successfully!";
+
+    message.style.color =
+        "#16a34a";
+
+
+    updateFare(fare);
+
+}
+
+function updateFare(fare){
+
+    finalFare =
+        Math.max(
+            0,
+            fare - discountAmount
+        );
+
+
+    document.getElementById(
+        "originalFare"
+    ).textContent =
+        "₹" + fare;
+
+
+    document.getElementById(
+        "discountAmount"
+    ).textContent =
+        "- ₹" + discountAmount;
+
+
+    document.getElementById(
+        "finalFare"
+    ).textContent =
+        "₹" + finalFare;
+
+}
 /* =====================================================
    SEARCH BUSES
 ===================================================== */
