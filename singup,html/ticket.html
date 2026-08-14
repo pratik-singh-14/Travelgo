@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>TravelGo | Ticket</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -22,6 +25,7 @@ body{
 header{
     height:70px;
     padding:0 6%;
+
     background:white;
     border-bottom:1px solid #e5e7eb;
 
@@ -105,7 +109,8 @@ header{
     font-size:11px;
 }
 
-/* TICKET */
+
+/* ================= TICKET ================= */
 
 .ticket{
     overflow:hidden;
@@ -114,7 +119,8 @@ header{
 
     border-radius:20px;
 
-    box-shadow:0 15px 45px rgba(0,0,0,.08);
+    box-shadow:
+        0 15px 45px rgba(0,0,0,.08);
 }
 
 .ticket-header{
@@ -151,6 +157,9 @@ header{
 .ticket-body{
     padding:30px;
 }
+
+
+/* ================= ROUTE ================= */
 
 .route{
     display:flex;
@@ -209,6 +218,9 @@ header{
     font-size:18px;
 }
 
+
+/* ================= DETAILS ================= */
+
 .details{
     display:grid;
 
@@ -239,6 +251,9 @@ header{
     font-size:11px;
 }
 
+
+/* ================= PASSENGER ================= */
+
 .passenger{
     padding:25px 0;
 
@@ -260,6 +275,9 @@ header{
     gap:18px;
 }
 
+
+/* ================= PRICE ================= */
+
 .price-section{
     display:flex;
     align-items:center;
@@ -270,7 +288,6 @@ header{
 
 .price-section span{
     color:#64748b;
-
     font-size:10px;
 }
 
@@ -281,7 +298,8 @@ header{
     font-weight:800;
 }
 
-/* BOOKING ID */
+
+/* ================= BOOKING ID ================= */
 
 .booking-id{
     margin-top:20px;
@@ -307,7 +325,8 @@ header{
     letter-spacing:1px;
 }
 
-/* ACTIONS */
+
+/* ================= ACTIONS ================= */
 
 .actions{
     display:flex;
@@ -345,7 +364,8 @@ header{
     color:#dc2626;
 }
 
-/* EMPTY */
+
+/* ================= EMPTY ================= */
 
 .empty{
     padding:50px 20px;
@@ -389,7 +409,8 @@ header{
     font-weight:800;
 }
 
-/* PRINT */
+
+/* ================= PRINT ================= */
 
 @media print{
 
@@ -411,9 +432,11 @@ header{
     .ticket{
         box-shadow:none;
     }
+
 }
 
-/* MOBILE */
+
+/* ================= MOBILE ================= */
 
 @media(max-width:600px){
 
@@ -437,11 +460,16 @@ header{
     .actions{
         flex-direction:column;
     }
+
 }
+
 </style>
+
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -469,7 +497,9 @@ header{
 </header>
 
 
+
 <main class="container">
+
 
     <div class="title">
 
@@ -488,33 +518,76 @@ header{
     </div>
 
 
-    <!-- TICKET -->
+    <div id="ticketContainer"></div>
 
-    <div
-        id="ticketContainer"
-    ></div>
 
 </main>
 
 
+
 <script>
+
+
+/* =====================================================
+   GET ALL BOOKINGS
+===================================================== */
 
 function getBookings(){
 
-    return JSON.parse(
-        localStorage.getItem(
-            "travelGoBookings"
-        )
-    ) || [];
+    try{
+
+        return JSON.parse(
+            localStorage.getItem(
+                "travelGoBookings"
+            )
+        ) || [];
+
+    }
+    catch(error){
+
+        console.error(
+            "Booking data error:",
+            error
+        );
+
+        return [];
+
+    }
 
 }
 
 
+/* =====================================================
+   LOAD TICKET
+===================================================== */
+
 function loadTicket(){
+
+    /* Get bookings FIRST */
 
     const bookings =
         getBookings();
 
+
+    /* Get selected booking ID */
+
+    const selectedId =
+        localStorage.getItem(
+            "travelGoSelectedBooking"
+        );
+
+
+    /* Find selected booking */
+
+    const booking =
+        bookings.find(
+            b =>
+                String(b.id) ===
+                String(selectedId)
+        ) || bookings[0];
+
+
+    /* Ticket container */
 
     const container =
         document.getElementById(
@@ -522,7 +595,21 @@ function loadTicket(){
         );
 
 
-    if(bookings.length === 0){
+    /* No container */
+
+    if(!container){
+
+        return;
+
+    }
+
+
+    /* No bookings */
+
+    if(
+        bookings.length === 0 ||
+        !booking
+    ){
 
         container.innerHTML = `
 
@@ -549,20 +636,18 @@ function loadTicket(){
         `;
 
         return;
+
     }
 
 
-    /*
-       Get the latest booking.
-    */
-
-    const booking =
-        bookings[0];
-
+    /* =================================================
+       TICKET HTML
+    ================================================= */
 
     container.innerHTML = `
 
         <div class="ticket">
+
 
             <div class="ticket-header">
 
@@ -571,7 +656,9 @@ function loadTicket(){
                 </h2>
 
                 <span class="confirmed">
-                    ✓ ${booking.status}
+
+                    ✓ ${booking.status || "Confirmed"}
+
                 </span>
 
             </div>
@@ -584,14 +671,15 @@ function loadTicket(){
 
                 <div class="route">
 
+
                     <div class="city">
 
                         <strong>
-                            ${booking.departure}
+                            ${booking.departure || "--"}
                         </strong>
 
                         <span>
-                            ${booking.from}
+                            ${booking.from || "--"}
                         </span>
 
                     </div>
@@ -603,21 +691,24 @@ function loadTicket(){
                     <div class="city">
 
                         <strong>
-                            ${booking.arrival}
+                            ${booking.arrival || "--"}
                         </strong>
 
                         <span>
-                            ${booking.to}
+                            ${booking.to || "--"}
                         </span>
 
                     </div>
 
+
                 </div>
+
 
 
                 <!-- DETAILS -->
 
                 <div class="details">
+
 
                     <div class="detail">
 
@@ -626,7 +717,7 @@ function loadTicket(){
                         </label>
 
                         <strong>
-                            ${booking.name}
+                            ${booking.name || "Not specified"}
                         </strong>
 
                     </div>
@@ -639,7 +730,7 @@ function loadTicket(){
                         </label>
 
                         <strong>
-                            ${booking.busType}
+                            ${booking.busType || "Bus"}
                         </strong>
 
                     </div>
@@ -652,7 +743,9 @@ function loadTicket(){
                         </label>
 
                         <strong>
-                            ${formatDate(booking.date)}
+                            ${formatDate(
+                                booking.date
+                            )}
                         </strong>
 
                     </div>
@@ -665,17 +758,20 @@ function loadTicket(){
                         </label>
 
                         <strong>
-                            ${booking.seat}
+                            ${booking.seat || "Not specified"}
                         </strong>
 
                     </div>
 
+
                 </div>
+
 
 
                 <!-- PASSENGER -->
 
                 <div class="passenger">
+
 
                     <h3>
                         Passenger Details
@@ -684,6 +780,7 @@ function loadTicket(){
 
                     <div class="passenger-grid">
 
+
                         <div class="detail">
 
                             <label>
@@ -691,7 +788,7 @@ function loadTicket(){
                             </label>
 
                             <strong>
-                                ${booking.passenger}
+                                ${booking.passenger || "Not specified"}
                             </strong>
 
                         </div>
@@ -704,7 +801,7 @@ function loadTicket(){
                             </label>
 
                             <strong>
-                                ${booking.phone}
+                                ${booking.phone || "Not specified"}
                             </strong>
 
                         </div>
@@ -717,7 +814,7 @@ function loadTicket(){
                             </label>
 
                             <strong>
-                                ${booking.email}
+                                ${booking.email || "Not specified"}
                             </strong>
 
                         </div>
@@ -730,14 +827,16 @@ function loadTicket(){
                             </label>
 
                             <strong>
-                                ${booking.id}
+                                ${booking.id || "Not specified"}
                             </strong>
 
                         </div>
 
+
                     </div>
 
                 </div>
+
 
 
                 <!-- PRICE -->
@@ -749,10 +848,13 @@ function loadTicket(){
                     </span>
 
                     <div class="price">
-                        ₹${booking.price}
+
+                        ₹${booking.price || 0}
+
                     </div>
 
                 </div>
+
 
 
                 <!-- BOOKING ID -->
@@ -762,15 +864,17 @@ function loadTicket(){
                     Booking Reference
 
                     <span>
-                        ${booking.id}
+                        ${booking.id || "N/A"}
                     </span>
 
                 </div>
 
 
+
                 <!-- ACTIONS -->
 
                 <div class="actions">
+
 
                     <button
                         class="action print"
@@ -797,7 +901,9 @@ function loadTicket(){
                         Cancel
                     </button>
 
+
                 </div>
+
 
             </div>
 
@@ -808,17 +914,32 @@ function loadTicket(){
 }
 
 
-/* FORMAT DATE */
+/* =====================================================
+   FORMAT DATE
+===================================================== */
 
 function formatDate(date){
 
     if(!date){
+
         return "Not specified";
+
     }
 
 
     const d =
         new Date(date);
+
+
+    if(
+        Number.isNaN(
+            d.getTime()
+        )
+    ){
+
+        return date;
+
+    }
 
 
     return d.toLocaleDateString(
@@ -833,7 +954,9 @@ function formatDate(date){
 }
 
 
-/* PRINT */
+/* =====================================================
+   PRINT TICKET
+===================================================== */
 
 function printTicket(){
 
@@ -842,7 +965,9 @@ function printTicket(){
 }
 
 
-/* CANCEL */
+/* =====================================================
+   CANCEL SELECTED BOOKING
+===================================================== */
 
 function cancelBooking(){
 
@@ -853,31 +978,61 @@ function cancelBooking(){
 
 
     if(!confirmCancel){
+
         return;
+
     }
 
 
-    let bookings =
+    const bookings =
         getBookings();
 
 
-    if(bookings.length === 0){
+    if(
+        bookings.length === 0
+    ){
+
         return;
+
     }
 
 
-    /*
-       Mark the latest booking
-       as cancelled.
-    */
+    const selectedId =
+        localStorage.getItem(
+            "travelGoSelectedBooking"
+        );
 
-    bookings[0].status =
+
+    let bookingIndex =
+        bookings.findIndex(
+            b =>
+                String(b.id) ===
+                String(selectedId)
+        );
+
+
+    /* If no selected ID, cancel first booking */
+
+    if(
+        bookingIndex === -1
+    ){
+
+        bookingIndex = 0;
+
+    }
+
+
+    bookings[
+        bookingIndex
+    ].status =
         "Cancelled";
 
 
     localStorage.setItem(
         "travelGoBookings",
-        JSON.stringify(bookings)
+        JSON.stringify(
+            bookings
+        )
     );
 
 
@@ -891,11 +1046,16 @@ function cancelBooking(){
 }
 
 
-/* LOAD */
+/* =====================================================
+   START
+===================================================== */
 
 loadTicket();
 
+
 </script>
 
+
 </body>
+
 </html>

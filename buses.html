@@ -7,6 +7,7 @@
 <title>TravelGo | Bus Booking</title>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -146,7 +147,8 @@ nav a.active{
 
 .search-panel{
     display:grid;
-    grid-template-columns:1fr 1fr 1fr 1fr auto;
+    grid-template-columns:
+        1fr 1fr 1fr 1fr auto;
 
     gap:10px;
 
@@ -464,6 +466,35 @@ nav a.active{
     background:#1d4ed8;
 }
 
+/* ================= NO RESULTS ================= */
+
+.no-results{
+    display:none;
+
+    padding:40px 20px;
+
+    background:white;
+
+    border:1px solid #e5e7eb;
+    border-radius:16px;
+
+    text-align:center;
+}
+
+.no-results.show{
+    display:block;
+}
+
+.no-results h3{
+    margin-bottom:8px;
+    font-size:18px;
+}
+
+.no-results p{
+    color:#6b7280;
+    font-size:11px;
+}
+
 /* ================= MODAL ================= */
 
 .modal{
@@ -691,6 +722,10 @@ nav a.active{
     font-weight:800;
 }
 
+.continue-btn:hover{
+    background:#1d4ed8;
+}
+
 /* ================= OTP ================= */
 
 .otp-section{
@@ -771,6 +806,10 @@ nav a.active{
     font-weight:800;
 }
 
+.booking-id span{
+    color:#2563eb;
+}
+
 .dashboard-btn{
     display:block;
 
@@ -812,6 +851,7 @@ nav a.active{
     .price-box{
         align-items:flex-start;
     }
+
 }
 
 @media(max-width:650px){
@@ -847,7 +887,18 @@ nav a.active{
     .line{
         width:40px;
     }
+
+    .modal-box{
+        padding:20px;
+    }
+
+    .seat{
+        width:32px;
+        height:32px;
+    }
+
 }
+
 </style>
 </head>
 
@@ -1018,6 +1069,7 @@ nav a.active{
                 Filters
             </h2>
 
+
             <div class="filter-group">
 
                 <h3>
@@ -1025,17 +1077,29 @@ nav a.active{
                 </h3>
 
                 <label class="filter-option">
-                    <input type="checkbox">
+                    <input
+                        type="checkbox"
+                        class="bus-filter"
+                        value="AC Sleeper"
+                    >
                     AC Sleeper
                 </label>
 
                 <label class="filter-option">
-                    <input type="checkbox">
+                    <input
+                        type="checkbox"
+                        class="bus-filter"
+                        value="Volvo"
+                    >
                     Volvo
                 </label>
 
                 <label class="filter-option">
-                    <input type="checkbox">
+                    <input
+                        type="checkbox"
+                        class="bus-filter"
+                        value="Non-AC"
+                    >
                     Non-AC
                 </label>
 
@@ -1049,17 +1113,29 @@ nav a.active{
                 </h3>
 
                 <label class="filter-option">
-                    <input type="checkbox">
+                    <input
+                        type="checkbox"
+                        class="time-filter"
+                        value="morning"
+                    >
                     Morning
                 </label>
 
                 <label class="filter-option">
-                    <input type="checkbox">
+                    <input
+                        type="checkbox"
+                        class="time-filter"
+                        value="afternoon"
+                    >
                     Afternoon
                 </label>
 
                 <label class="filter-option">
-                    <input type="checkbox">
+                    <input
+                        type="checkbox"
+                        class="time-filter"
+                        value="night"
+                    >
                     Night
                 </label>
 
@@ -1073,17 +1149,29 @@ nav a.active{
                 </h3>
 
                 <label class="filter-option">
-                    <input type="checkbox">
+                    <input
+                        type="checkbox"
+                        class="amenity-filter"
+                        value="Wi-Fi"
+                    >
                     Wi-Fi
                 </label>
 
                 <label class="filter-option">
-                    <input type="checkbox">
+                    <input
+                        type="checkbox"
+                        class="amenity-filter"
+                        value="Charging"
+                    >
                     Charging
                 </label>
 
                 <label class="filter-option">
-                    <input type="checkbox">
+                    <input
+                        type="checkbox"
+                        class="amenity-filter"
+                        value="Water"
+                    >
                     Water Bottle
                 </label>
 
@@ -1094,7 +1182,7 @@ nav a.active{
 
         <!-- RESULTS -->
 
-        <section>
+        <section id="busResults">
 
             <div class="results-header">
 
@@ -1131,6 +1219,9 @@ nav a.active{
                 class="bus-card"
                 data-price="699"
                 data-rating="4.8"
+                data-type="AC Sleeper"
+                data-time="night"
+                data-amenities="Wi-Fi,Charging,Water"
             >
 
                 <div>
@@ -1154,7 +1245,9 @@ nav a.active{
 
                         <div class="station">
 
-                            <strong>21:30</strong>
+                            <strong>
+                                21:30
+                            </strong>
 
                             <span>
                                 Delhi
@@ -1176,7 +1269,9 @@ nav a.active{
 
                         <div class="station">
 
-                            <strong>03:00</strong>
+                            <strong>
+                                03:00
+                            </strong>
 
                             <span>
                                 Jaipur
@@ -1268,6 +1363,9 @@ nav a.active{
                 class="bus-card"
                 data-price="849"
                 data-rating="4.9"
+                data-type="AC Sleeper"
+                data-time="night"
+                data-amenities="Wi-Fi,Charging"
             >
 
                 <div>
@@ -1291,7 +1389,9 @@ nav a.active{
 
                         <div class="station">
 
-                            <strong>22:00</strong>
+                            <strong>
+                                22:00
+                            </strong>
 
                             <span>
                                 Delhi
@@ -1313,7 +1413,9 @@ nav a.active{
 
                         <div class="station">
 
-                            <strong>03:15</strong>
+                            <strong>
+                                03:15
+                            </strong>
 
                             <span>
                                 Jaipur
@@ -1401,6 +1503,9 @@ nav a.active{
                 class="bus-card"
                 data-price="499"
                 data-rating="4.4"
+                data-type="AC Seater"
+                data-time="morning"
+                data-amenities="Charging,Water"
             >
 
                 <div>
@@ -1424,7 +1529,9 @@ nav a.active{
 
                         <div class="station">
 
-                            <strong>07:00</strong>
+                            <strong>
+                                07:00
+                            </strong>
 
                             <span>
                                 Delhi
@@ -1446,7 +1553,9 @@ nav a.active{
 
                         <div class="station">
 
-                            <strong>13:00</strong>
+                            <strong>
+                                13:00
+                            </strong>
 
                             <span>
                                 Jaipur
@@ -1534,6 +1643,9 @@ nav a.active{
                 class="bus-card"
                 data-price="999"
                 data-rating="4.7"
+                data-type="Luxury AC Sleeper"
+                data-time="night"
+                data-amenities="Wi-Fi,Charging"
             >
 
                 <div>
@@ -1557,7 +1669,9 @@ nav a.active{
 
                         <div class="station">
 
-                            <strong>20:45</strong>
+                            <strong>
+                                20:45
+                            </strong>
 
                             <span>
                                 Delhi
@@ -1579,7 +1693,9 @@ nav a.active{
 
                         <div class="station">
 
-                            <strong>02:30</strong>
+                            <strong>
+                                02:30
+                            </strong>
 
                             <span>
                                 Jaipur
@@ -1664,6 +1780,22 @@ nav a.active{
 
             </article>
 
+
+            <div
+                class="no-results"
+                id="noResults"
+            >
+
+                <h3>
+                    🚌 No buses found
+                </h3>
+
+                <p>
+                    Try another route or change your filters.
+                </p>
+
+            </div>
+
         </section>
 
     </div>
@@ -1704,8 +1836,7 @@ nav a.active{
             <div
                 class="selected-bus"
                 id="selectedBus"
-            >
-            </div>
+            ></div>
 
 
             <div class="seat-title">
@@ -1910,8 +2041,7 @@ nav a.active{
             <div
                 class="selected-bus"
                 id="passengerBus"
-            >
-            </div>
+            ></div>
 
 
             <div class="form-group">
@@ -2092,30 +2222,34 @@ nav a.active{
 
 <script>
 
-/* ================= DATE ================= */
+/* =====================================================
+   DATE
+===================================================== */
 
 const today = new Date();
 
 const todayString =
     today.getFullYear() +
     "-" +
-    String(today.getMonth()+1).padStart(2,"0") +
+    String(today.getMonth() + 1).padStart(2,"0") +
     "-" +
     String(today.getDate()).padStart(2,"0");
 
-document
-.getElementById("journeyDate")
-.min = todayString;
+document.getElementById("journeyDate").min =
+    todayString;
 
 
-/* ================= BOOKING VARIABLES ================= */
+/* =====================================================
+   BOOKING VARIABLES
+===================================================== */
 
 let selectedBus = {};
-
 let selectedSeat = null;
 
 
-/* ================= SEARCH ================= */
+/* =====================================================
+   SEARCH BUSES
+===================================================== */
 
 function searchBuses(){
 
@@ -2123,13 +2257,15 @@ function searchBuses(){
         document
         .getElementById("fromCity")
         .value
-        .trim();
+        .trim()
+        .toLowerCase();
 
     const to =
         document
         .getElementById("toCity")
         .value
-        .trim();
+        .trim()
+        .toLowerCase();
 
     const date =
         document
@@ -2167,19 +2303,67 @@ function searchBuses(){
     }
 
 
-    /*
-       This demo currently has
-       Delhi → Jaipur buses.
-    */
+    const cards =
+        document.querySelectorAll(
+            ".bus-card"
+        );
 
-    alert(
-        `Searching buses from ${from} to ${to}...`
-    );
+
+    let found = 0;
+
+
+    cards.forEach(card => {
+
+        const text =
+            card.innerText.toLowerCase();
+
+
+        if(
+            text.includes(from) &&
+            text.includes(to)
+        ){
+
+            card.style.display =
+                "grid";
+
+            found++;
+
+        }else{
+
+            card.style.display =
+                "none";
+
+        }
+
+    });
+
+
+    const noResults =
+        document.getElementById(
+            "noResults"
+        );
+
+
+    if(found === 0){
+
+        noResults.classList.add(
+            "show"
+        );
+
+    }else{
+
+        noResults.classList.remove(
+            "show"
+        );
+
+    }
 
 }
 
 
-/* ================= SORT ================= */
+/* =====================================================
+   SORT BUSES
+===================================================== */
 
 function sortBuses(){
 
@@ -2188,8 +2372,12 @@ function sortBuses(){
         .getElementById("sortBuses")
         .value;
 
+
     const container =
-        document.querySelector("section");
+        document.getElementById(
+            "busResults"
+        );
+
 
     const cards =
         Array.from(
@@ -2227,10 +2415,22 @@ function sortBuses(){
 
     });
 
+
+    const noResults =
+        document.getElementById(
+            "noResults"
+        );
+
+    container.appendChild(
+        noResults
+    );
+
 }
 
 
-/* ================= OPEN BOOKING ================= */
+/* =====================================================
+   OPEN BOOKING
+===================================================== */
 
 function openBooking(
     name,
@@ -2259,13 +2459,16 @@ function openBooking(
 
 
     document
-    .querySelectorAll(".seat.selected")
-    .forEach(
-        seat =>
+    .querySelectorAll(
+        ".seat.selected"
+    )
+    .forEach(seat => {
+
         seat.classList.remove(
             "selected"
-        )
-    );
+        );
+
+    });
 
 
     document
@@ -2295,6 +2498,7 @@ function openBooking(
         <br>
 
         Starting fare:
+
         <strong>
             ₹${price}
         </strong>
@@ -2309,27 +2513,35 @@ function openBooking(
 
     document
     .getElementById("seatSection")
-    .style.display = "block";
+    .style.display =
+        "block";
 
 
     document
     .getElementById("passengerSection")
-    .style.display = "none";
+    .style.display =
+        "none";
 
 
     document
     .getElementById("otpSection")
-    .classList.remove("show");
+    .classList.remove(
+        "show"
+    );
 
 
     document
     .getElementById("successSection")
-    .classList.remove("show");
+    .classList.remove(
+        "show"
+    );
 
 }
 
 
-/* ================= SELECT SEAT ================= */
+/* =====================================================
+   SELECT SEAT
+===================================================== */
 
 function selectSeat(button){
 
@@ -2345,13 +2557,16 @@ function selectSeat(button){
 
 
     document
-    .querySelectorAll(".seat.selected")
-    .forEach(
-        seat =>
+    .querySelectorAll(
+        ".seat.selected"
+    )
+    .forEach(seat => {
+
         seat.classList.remove(
             "selected"
-        )
-    );
+        );
+
+    });
 
 
     button.classList.add(
@@ -2365,7 +2580,9 @@ function selectSeat(button){
 }
 
 
-/* ================= PASSENGER ================= */
+/* =====================================================
+   PASSENGER DETAILS
+===================================================== */
 
 function continueToPassenger(){
 
@@ -2397,6 +2614,7 @@ function continueToPassenger(){
         <br>
 
         Selected Seat:
+
         <strong>
             ${selectedSeat}
         </strong>
@@ -2404,6 +2622,7 @@ function continueToPassenger(){
         <br>
 
         Fare:
+
         <strong>
             ₹${selectedBus.price}
         </strong>
@@ -2413,35 +2632,47 @@ function continueToPassenger(){
 
     document
     .getElementById("seatSection")
-    .style.display = "none";
+    .style.display =
+        "none";
 
 
     document
     .getElementById("passengerSection")
-    .style.display = "block";
+    .style.display =
+        "block";
 
 }
 
 
-/* ================= SEND OTP ================= */
+/* =====================================================
+   SEND OTP
+===================================================== */
 
 function sendOTP(){
 
     const name =
         document
-        .getElementById("passengerName")
+        .getElementById(
+            "passengerName"
+        )
         .value
         .trim();
+
 
     const phone =
         document
-        .getElementById("passengerPhone")
+        .getElementById(
+            "passengerPhone"
+        )
         .value
         .trim();
 
+
     const email =
         document
-        .getElementById("passengerEmail")
+        .getElementById(
+            "passengerEmail"
+        )
         .value
         .trim();
 
@@ -2471,7 +2702,8 @@ function sendOTP(){
 
 
     if(
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        .test(email)
     ){
 
         alert(
@@ -2496,25 +2728,29 @@ function sendOTP(){
         selectedSeat;
 
 
-    /*
-       Save selected booking temporarily
-       before OTP verification.
-    */
-
     localStorage.setItem(
         "travelGoPendingBusBooking",
-        JSON.stringify(selectedBus)
+        JSON.stringify(
+            selectedBus
+        )
     );
 
 
     document
-    .getElementById("passengerSection")
-    .style.display = "none";
+    .getElementById(
+        "passengerSection"
+    )
+    .style.display =
+        "none";
 
 
     document
-    .getElementById("otpSection")
-    .classList.add("show");
+    .getElementById(
+        "otpSection"
+    )
+    .classList.add(
+        "show"
+    );
 
 
     console.log(
@@ -2524,13 +2760,17 @@ function sendOTP(){
 }
 
 
-/* ================= VERIFY OTP ================= */
+/* =====================================================
+   VERIFY OTP
+===================================================== */
 
 function verifyOTP(){
 
     const otp =
         document
-        .getElementById("otpInput")
+        .getElementById(
+            "otpInput"
+        )
         .value
         .trim();
 
@@ -2554,10 +2794,6 @@ function verifyOTP(){
         );
 
 
-    /*
-       Get existing bookings.
-    */
-
     let bookings =
         JSON.parse(
             localStorage.getItem(
@@ -2565,10 +2801,6 @@ function verifyOTP(){
             )
         ) || [];
 
-
-    /*
-       Create confirmed booking.
-    */
 
     const confirmedBooking = {
 
@@ -2602,7 +2834,9 @@ function verifyOTP(){
 
         date:
             document
-            .getElementById("journeyDate")
+            .getElementById(
+                "journeyDate"
+            )
             .value
             ||
             new Date()
@@ -2617,57 +2851,54 @@ function verifyOTP(){
     };
 
 
-    /*
-       Add newest booking
-       at the beginning.
-    */
-
     bookings.unshift(
         confirmedBooking
     );
 
 
-    /*
-       Save bookings.
-    */
-
     localStorage.setItem(
         "travelGoBookings",
-        JSON.stringify(bookings)
+        JSON.stringify(
+            bookings
+        )
     );
 
 
-    /*
-       Remove pending booking.
-    */
+    localStorage.setItem(
+        "travelGoSelectedBooking",
+        bookingId
+    );
+
 
     localStorage.removeItem(
         "travelGoPendingBusBooking"
     );
 
 
-    /*
-       Display booking ID.
-    */
-
     document
-    .getElementById("bookingId")
+    .getElementById(
+        "bookingId"
+    )
     .textContent =
         bookingId;
 
 
-    /*
-       Show success screen.
-    */
+    document
+    .getElementById(
+        "otpSection"
+    )
+    .classList.remove(
+        "show"
+    );
+
 
     document
-    .getElementById("otpSection")
-    .classList.remove("show");
-
-
-    document
-    .getElementById("successSection")
-    .classList.add("show");
+    .getElementById(
+        "successSection"
+    )
+    .classList.add(
+        "show"
+    );
 
 
     console.log(
@@ -2678,10 +2909,14 @@ function verifyOTP(){
 }
 
 
-/* ================= PHONE ================= */
+/* =====================================================
+   PHONE INPUT
+===================================================== */
 
 document
-.getElementById("passengerPhone")
+.getElementById(
+    "passengerPhone"
+)
 .addEventListener(
     "input",
     function(){
@@ -2696,10 +2931,14 @@ document
 );
 
 
-/* ================= OTP ================= */
+/* =====================================================
+   OTP INPUT
+===================================================== */
 
 document
-.getElementById("otpInput")
+.getElementById(
+    "otpInput"
+)
 .addEventListener(
     "input",
     function(){
@@ -2714,21 +2953,31 @@ document
 );
 
 
-/* ================= CLOSE ================= */
+/* =====================================================
+   CLOSE BOOKING
+===================================================== */
 
 function closeBooking(){
 
     document
-    .getElementById("bookingModal")
-    .classList.remove("show");
+    .getElementById(
+        "bookingModal"
+    )
+    .classList.remove(
+        "show"
+    );
 
 }
 
 
-/* ================= OUTSIDE CLICK ================= */
+/* =====================================================
+   OUTSIDE CLICK
+===================================================== */
 
 document
-.getElementById("bookingModal")
+.getElementById(
+    "bookingModal"
+)
 .addEventListener(
     "click",
     function(event){
@@ -2745,13 +2994,17 @@ document
 );
 
 
-/* ================= ESC ================= */
+/* =====================================================
+   ESCAPE KEY
+===================================================== */
 
 document.addEventListener(
     "keydown",
     function(event){
 
-        if(event.key === "Escape"){
+        if(
+            event.key === "Escape"
+        ){
 
             closeBooking();
 
@@ -2759,6 +3012,153 @@ document.addEventListener(
 
     }
 );
+
+
+/* =====================================================
+   FILTERS
+===================================================== */
+
+document
+.querySelectorAll(
+    ".bus-filter, .time-filter, .amenity-filter"
+)
+.forEach(filter => {
+
+    filter.addEventListener(
+        "change",
+        applyFilters
+    );
+
+});
+
+
+function applyFilters(){
+
+    const typeFilters =
+        Array.from(
+            document.querySelectorAll(
+                ".bus-filter:checked"
+            )
+        )
+        .map(
+            input =>
+            input.value.toLowerCase()
+        );
+
+
+    const timeFilters =
+        Array.from(
+            document.querySelectorAll(
+                ".time-filter:checked"
+            )
+        )
+        .map(
+            input =>
+            input.value.toLowerCase()
+        );
+
+
+    const amenityFilters =
+        Array.from(
+            document.querySelectorAll(
+                ".amenity-filter:checked"
+            )
+        )
+        .map(
+            input =>
+            input.value.toLowerCase()
+        );
+
+
+    const cards =
+        document.querySelectorAll(
+            ".bus-card"
+        );
+
+
+    let visible = 0;
+
+
+    cards.forEach(card => {
+
+        const type =
+            card.dataset.type
+            .toLowerCase();
+
+        const time =
+            card.dataset.time
+            .toLowerCase();
+
+        const amenities =
+            card.dataset.amenities
+            .toLowerCase();
+
+
+        const typeMatch =
+            typeFilters.length === 0 ||
+            typeFilters.some(
+                filter =>
+                type.includes(filter)
+            );
+
+
+        const timeMatch =
+            timeFilters.length === 0 ||
+            timeFilters.includes(time);
+
+
+        const amenityMatch =
+            amenityFilters.length === 0 ||
+            amenityFilters.every(
+                filter =>
+                amenities.includes(filter)
+            );
+
+
+        const show =
+            typeMatch &&
+            timeMatch &&
+            amenityMatch;
+
+
+        if(show){
+
+            card.style.display =
+                "grid";
+
+            visible++;
+
+        }else{
+
+            card.style.display =
+                "none";
+
+        }
+
+    });
+
+
+    const noResults =
+        document.getElementById(
+            "noResults"
+        );
+
+
+    if(visible === 0){
+
+        noResults.classList.add(
+            "show"
+        );
+
+    }else{
+
+        noResults.classList.remove(
+            "show"
+        );
+
+    }
+
+}
 
 </script>
 
